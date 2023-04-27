@@ -30,7 +30,7 @@ export default function Home() {
           {/* tailwindui.com */}
           <label
             htmlFor='email'
-            className='block text-sm font-medium leading-6 text-gray-900'
+            className='block text-lg font-medium leading-5'
           >
             Prompt
           </label>
@@ -38,7 +38,7 @@ export default function Home() {
             <input
               value={text}
               onChange={e => setText(e.target.value)}
-              className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+              className='block w-full px-4 border-0 rounded-md shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-base sm:leading-6'
               placeholder='Enter your prompt here'
             />
             <button
@@ -73,18 +73,19 @@ export default function Home() {
               {loading ? 'Submitting...' : 'Submit'}
             </button>
           </div>
-          <pre>Response Message: {response}</pre>
-          Error: {error}
+          {/* <pre>Response Message: {response}</pre>
+          Error: {error} */}
         </div>
       </div>
       <div>
-        <h1 className='py-8 text-4xl'>These are your images!</h1>
+        <h1 className='py-8 text-4xl text-center'>These are your images!</h1>
         <div className='grid grid-cols-3 gap-4'>
-          {imgs.map(img => (
+          {imgs.map(({ imgUrl }) => (
+            imgUrl &&
             <img
-              src={img.imgUrl}
+              src={imgUrl}
               className='w-full'
-              key={img.imgUrl}
+              key={imgUrl}
               alt='nothing'
             />
           ))}
