@@ -71,6 +71,7 @@ export default function Home() {
               <button
                 className='px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700'
                 onClick={async () => {
+                  setLoadingImage(true);
                   setLoading(true);
                   try {
                     let r = await axios.post(
@@ -95,19 +96,19 @@ export default function Home() {
             <div className='flex gap-1 mt-1'>
               <button
                 className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
-                onClick={() => handleButtonAddText(' —v4 ')}
+                onClick={() => handleButtonAddText('—v4')}
               >
                 —v4
               </button>
               <button
                 className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
-                onClick={() => handleButtonAddText(' —v5 ')}
+                onClick={() => handleButtonAddText('—v5')}
               >
                 —v5
               </button>
               <button
                 className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
-                onClick={() => handleButtonAddText(' — ')}
+                onClick={() => handleButtonAddText('—')}
               >
                 —
               </button>
