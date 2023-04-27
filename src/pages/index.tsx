@@ -83,7 +83,7 @@ export default function Home() {
         <h1 className='py-8 text-4xl text-center'>These are your images!</h1>
         <div className='grid grid-cols-3 gap-4'>
           {imgs.map(({ imgUrl, buttons, buttonMessageId }) => (
-            <div>
+            <div key={buttonMessageId}>
               {
                 imgUrl &&
                 <img
@@ -93,36 +93,39 @@ export default function Home() {
                   alt='nothing'
                 />
               }
-              <div className='grid grid-flow-col grid-rows-1 gap-3 mt-1'>
-                {buttons &&
-                  buttons.filter(el => el !== 'V1' && el !== 'V2' && el !== 'V3' && el !== 'V4').map(btnText => (
-                    <button
-                      className='px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700'
-                      onClick={async () => {
-                        console.log(`Submitting my prompt: ${text}`);
-                        setLoading(true);
-                        try {
-                          let r = await axios.post(
-                            `${endpoint}`,
-                            {
-                              "button": btnText,
-                              "buttonMessageId": buttonMessageId,
-                            },
-                            { headers },
-                          );
 
-                          console.log(r.data);
-                          setResponse(JSON.stringify(r.data, null, 2));
-                        } catch (e: any) {
-                          console.log(e);
-                          setError(e.message);
-                        }
-                        setLoading(false);
-                      }}
-                    >{btnText}</button>
-                  ))
-                }
-              </div>
+              {buttons &&
+                <div className='grid grid-flow-col grid-rows-1 gap-3 mt-1'>
+                  {
+                    buttons.filter(el => el !== 'V1' && el !== 'V2' && el !== 'V3' && el !== 'V4').map((btnText, idx) => (
+                      <button
+                        key={idx}
+                        className='px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-blue-700'
+                        onClick={async () => {
+                          console.log(`Submitting my prompt: ${text}`);
+                          setLoading(true);
+                          try {
+                            let r = await axios.post(
+                              `${endpoint}`,
+                              {
+                                "button": btnText,
+                                "buttonMessageId": buttonMessageId,
+                              },
+                              { headers },
+                            );
+                            setResponse(JSON.stringify(r.data, null, 2));
+                          } catch (e: any) {
+                            console.log(e);
+                            setError(e.message);
+                          }
+                          setLoading(false);
+                        }}
+                      >{btnText}</button>
+                    ))
+                  }
+                </div>
+              }
+
             </div>
 
           ))}
