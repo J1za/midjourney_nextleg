@@ -4,6 +4,7 @@ import { firestore } from '../db';
 import { collection, doc, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import MyButton from '@/components/MyButton';
+import Image from 'next/image';
 
 const AUTH_TOKEN = '55d62488-0bc3-4f89-92d6-5bfca0732740';
 const endpoint = `https://api.thenextleg.io`;
@@ -14,7 +15,7 @@ export default function Home() {
     Authorization: `Bearer ${AUTH_TOKEN}`,
   };
   const [text, setText] = useState('');
-  const [imgs, setImgs] = useState<{ createdAt: any; imgUrl: string, buttonMessageId?: string, buttons?: string[] }[]>([]);
+  const [imgs, setImgs] = useState<{ createdAt: any; imgUrl: string, buttonMessageId?: string, buttons?: string[], content: string }[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [response, setResponse] = useState('');
@@ -31,15 +32,18 @@ export default function Home() {
       }[] = snapshot.docs.map(
         doc => doc.data(),
       ) as any;;
-      setImgs(allImgs);
+      setImgs(allImgs as any);
     });
 
     return () => unsubscribe();
   }, []);
 
+  const handleButtonAddText = (value: string) => {
+    setText(text + value);
+  };
   return (
-    <div className='container flex flex-col items-center h-screen mx-auto mt-60'>
-      <div className='w-full px-20 mx-auto'>
+    <div className='container flex flex-col items-center h-screen mx-auto mt-20 sm:mt-60'>
+      <div className='w-full px-5 mx-auto sm:px-20'>
         <div className='relative'>
           {/* tailwindui.com */}
           {/* <div className='fixed w-3/4 left-2/4 translate-x-[-50%] top-60'> */}
@@ -60,7 +64,6 @@ export default function Home() {
               <button
                 className='px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700'
                 onClick={async () => {
-                  console.log(`Submitting my prompt: ${text}`);
                   setLoading(true);
                   try {
                     let r = await axios.post(
@@ -71,8 +74,6 @@ export default function Home() {
                       },
                       { headers },
                     );
-
-                    console.log(r.data);
                     setResponse(JSON.stringify(r.data, null, 2));
                   } catch (e: any) {
                     console.log(e);
@@ -84,23 +85,48 @@ export default function Home() {
                 {loading ? 'Submitting...' : 'Submit'}
               </button>
             </div>
+            <div className='flex gap-1 mt-1'>
+              <button
+                className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
+                onClick={() => handleButtonAddText(' —v4 ')}
+              >
+                —v4
+              </button>
+              <button
+                className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
+                onClick={() => handleButtonAddText(' —v5 ')}
+              >
+                —v5
+              </button>
+              <button
+                className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
+                onClick={() => handleButtonAddText(' — ')}
+              >
+                —
+              </button>
+            </div>
           </div>
           {/* <pre>Response Message: {response}</pre>
           Error: {error} */}
         </div>
       </div>
-      <div>
+      <div className='p-2 sm:p-0'>
         <h1 className='py-8 text-4xl text-center'>These are your images!</h1>
-        <div className='grid grid-cols-3 gap-4'>
-          {imgs.map(({ imgUrl, buttons, buttonMessageId }) => (
+        <div className='grid gap-4 sm:grid-cols-3'>
+          {imgs.map(({ imgUrl, buttons, buttonMessageId, content }) => (
             <div key={buttonMessageId}>
+              {content &&
+                <pre>Prompt text: {content}</pre>
+              }
               {
                 imgUrl &&
-                <img
+                <Image
                   src={imgUrl}
                   className='w-full'
                   key={imgUrl}
                   alt='nothing'
+                  width={400}
+                  height={400}
                 />
               }
 

@@ -24,7 +24,7 @@ import { firestore } from '../../db';
 import { addDoc, collection } from 'firebase/firestore';
 
 export default async function handler(req: any, res: any) {
-  const { imageUrl, buttonMessageId, buttons } = req.body as any;
+  const { imageUrl, buttonMessageId, buttons, content } = req.body as any;
   console.log(req.body);
 
   imageUrl.length > 0 && await addDoc(collection(firestore, 'imgs'), {
@@ -32,6 +32,7 @@ export default async function handler(req: any, res: any) {
     createdAt: new Date(), // serverTimestamp() -> Not all clients will have the same time
     buttonMessageId,
     buttons,
+    content,
   });
 
   res.status(200).json({ name: 'John Doe' });
