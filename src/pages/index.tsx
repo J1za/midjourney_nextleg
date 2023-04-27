@@ -120,7 +120,7 @@ export default function Home() {
                           }
                           setLoading(false);
                         }}
-                      >{btnText}</button>
+                      >{loading ? 'Loading...' : btnText}</button>
                     ))
                   }
                 </div>
