@@ -4,7 +4,7 @@ import { firestore } from '../db';
 import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
-const AUTH_TOKEN = '';
+const AUTH_TOKEN = '55d62488-0bc3-4f89-92d6-5bfca0732740';
 const endpoint = `https://api.thenextleg.io`;
 
 export default function Home() {
@@ -24,8 +24,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className='container mx-auto h-screen flex flex-col items-center justify-center '>
-      <div className='w-full mx-auto px-20'>
+    <div className='container flex flex-col items-center justify-center h-screen mx-auto '>
+      <div className='w-full px-20 mx-auto'>
         <div>
           {/* tailwindui.com */}
           <label
@@ -34,7 +34,7 @@ export default function Home() {
           >
             Prompt
           </label>
-          <div className='mt-2 flex space-x-2'>
+          <div className='flex mt-2 space-x-2'>
             <input
               value={text}
               onChange={e => setText(e.target.value)}
@@ -42,7 +42,7 @@ export default function Home() {
               placeholder='Enter your prompt here'
             />
             <button
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+              className='px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700'
               onClick={async () => {
                 console.log(`Submitting my prompt: ${text}`);
                 setLoading(true);
@@ -78,7 +78,7 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <h1 className='text-4xl py-8'>These are your images!</h1>
+        <h1 className='py-8 text-4xl'>These are your images!</h1>
         <div className='grid grid-cols-3 gap-4'>
           {imgs.map(img => (
             <img
