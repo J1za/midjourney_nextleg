@@ -122,7 +122,6 @@ export default function Home() {
         </div>
       </div>
       <div className='p-2 sm:p-0'>
-        <h1 className='py-8 text-4xl text-center'>These are your images!</h1>
         <div className='grid gap-4 sm:grid-cols-3'>
           {imgs.map(({ imgUrl, buttons, buttonMessageId, content }) => (
             <div key={buttonMessageId}>
