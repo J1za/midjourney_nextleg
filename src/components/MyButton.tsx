@@ -6,15 +6,17 @@ type Props = {
     headers: Record<string, string>;
     buttonMessageId: string;
     btnText: string;
+    onClick: any;
 };
 
 
-export default function MyButton({ btnText, endpoint, buttonMessageId, headers }: Props) {
+export default function MyButton({ btnText, endpoint, buttonMessageId, headers, onClick }: Props) {
     const [isLoading, setIsLoading] = useState(false);
     const [response, setResponse] = useState<any>(null);
     const [error, setError] = useState(null);
 
     const handleClick = async () => {
+        onClick();
         setIsLoading(true);
         try {
             const r = await axios.post(
@@ -30,7 +32,6 @@ export default function MyButton({ btnText, endpoint, buttonMessageId, headers }
                 setIsLoading(false);
             }, 2000)
         } catch (e: any) {
-            console.log(e);
             setError(e.message);
             setTimeout(() => {
                 setIsLoading(false);

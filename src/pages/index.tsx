@@ -5,6 +5,7 @@ import { collection, doc, onSnapshot, query, orderBy } from 'firebase/firestore'
 import { useEffect, useState } from 'react';
 import MyButton from '@/components/MyButton';
 import Image from 'next/image';
+import Loading from '@/components/Loading';
 
 const AUTH_TOKEN = '55d62488-0bc3-4f89-92d6-5bfca0732740';
 const endpoint = `https://api.thenextleg.io`;
@@ -17,6 +18,7 @@ export default function Home() {
   const [text, setText] = useState('');
   const [imgs, setImgs] = useState<{ createdAt: any; imgUrl: string, buttonMessageId?: string, buttons?: string[], content: string }[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingImage, setLoadingImage] = useState(false);
   const [error, setError] = useState('');
   const [response, setResponse] = useState('');
 
@@ -35,8 +37,13 @@ export default function Home() {
       setImgs(allImgs as any);
     });
 
-    return () => unsubscribe();
+    return () => (
+      unsubscribe()
+    );
   }, []);
+  useEffect(() => {
+    setLoadingImage(false)
+  }, [imgs]);
 
   const handleButtonAddText = (value: string) => {
     setText(text + value);
@@ -116,7 +123,7 @@ export default function Home() {
           {imgs.map(({ imgUrl, buttons, buttonMessageId, content }) => (
             <div key={buttonMessageId}>
               {content &&
-                <p> <pre className='inline font-light'>Prompt text:</pre> <span className='font-semibold'>{content}</span></p>
+                <p> <pre className='inline'>Prompt text:</pre> <span className='font-semibold'>{content}</span></p>
               }
               {
                 imgUrl &&
@@ -140,6 +147,7 @@ export default function Home() {
                         endpoint={endpoint}
                         buttonMessageId={buttonMessageId!}
                         headers={headers}
+                        onClick={() => setLoadingImage(true)}
                       />
                     ))
                   }
@@ -152,6 +160,7 @@ export default function Home() {
         </div>
 
       </div>
+      {loadingImage && <Loading />}
     </div>
   );
 }
