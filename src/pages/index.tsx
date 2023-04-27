@@ -75,8 +75,8 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <pre>Response Message: {response}</pre>
-          Error: {error}
+          {/* <pre>Response Message: {response}</pre>
+          Error: {error} */}
         </div>
       </div>
       <div>
