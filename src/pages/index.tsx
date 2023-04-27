@@ -8,8 +8,12 @@ const AUTH_TOKEN = '55d62488-0bc3-4f89-92d6-5bfca0732740';
 const endpoint = `https://api.thenextleg.io`;
 
 export default function Home() {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${AUTH_TOKEN}`,
+  };
   const [text, setText] = useState('');
-  const [imgs, setImgs] = useState<{ createdAt: any; imgUrl: string }[]>([]);
+  const [imgs, setImgs] = useState<{ createdAt: any; imgUrl: string, buttonMessageId?: string, buttons?: string[] }[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [response, setResponse] = useState('');
@@ -49,11 +53,6 @@ export default function Home() {
                   console.log(`Submitting my prompt: ${text}`);
                   setLoading(true);
                   try {
-                    let headers = {
-                      'Content-Type': 'application/json',
-                      Authorization: `Bearer ${AUTH_TOKEN}`,
-                    };
-
                     let r = await axios.post(
                       `${endpoint}`,
                       {
@@ -76,23 +75,59 @@ export default function Home() {
               </button>
             </div>
           </div>
-          {/* <pre>Response Message: {response}</pre>
-          Error: {error} */}
+          <pre>Response Message: {response}</pre>
+          Error: {error}
         </div>
       </div>
       <div>
         <h1 className='py-8 text-4xl text-center'>These are your images!</h1>
         <div className='grid grid-cols-3 gap-4'>
-          {imgs.map(({ imgUrl }) => (
-            imgUrl &&
-            <img
-              src={imgUrl}
-              className='w-full'
-              key={imgUrl}
-              alt='nothing'
-            />
+          {imgs.map(({ imgUrl, buttons, buttonMessageId }) => (
+            <div>
+              {
+                imgUrl &&
+                <img
+                  src={imgUrl}
+                  className='w-full'
+                  key={imgUrl}
+                  alt='nothing'
+                />
+              }
+              <div className='grid grid-flow-col grid-rows-1 gap-3 mt-1'>
+                {buttons &&
+                  buttons.filter(el => el !== 'V1' && el !== 'V2' && el !== 'V3' && el !== 'V4').map(btnText => (
+                    <button
+                      className='px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700'
+                      onClick={async () => {
+                        console.log(`Submitting my prompt: ${text}`);
+                        setLoading(true);
+                        try {
+                          let r = await axios.post(
+                            `${endpoint}`,
+                            {
+                              "button": btnText,
+                              "buttonMessageId": buttonMessageId,
+                            },
+                            { headers },
+                          );
+
+                          console.log(r.data);
+                          setResponse(JSON.stringify(r.data, null, 2));
+                        } catch (e: any) {
+                          console.log(e);
+                          setError(e.message);
+                        }
+                        setLoading(false);
+                      }}
+                    >{btnText}</button>
+                  ))
+                }
+              </div>
+            </div>
+
           ))}
         </div>
+
       </div>
     </div>
   );

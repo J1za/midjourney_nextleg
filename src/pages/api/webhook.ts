@@ -27,7 +27,7 @@ export default async function handler(req: any, res: any) {
   const { imageUrl, buttonMessageId, buttons } = req.body as any;
   console.log(req.body);
 
-  await addDoc(collection(firestore, 'imgs'), {
+  imageUrl.length > 0 && await addDoc(collection(firestore, 'imgs'), {
     imgUrl: imageUrl,
     createdAt: new Date(), // serverTimestamp() -> Not all clients will have the same time
     buttonMessageId,
