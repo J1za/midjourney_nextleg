@@ -116,7 +116,7 @@ export default function Home() {
           {imgs.map(({ imgUrl, buttons, buttonMessageId, content }) => (
             <div key={buttonMessageId}>
               {content &&
-                <pre>Prompt text: {content}</pre>
+                <p> <pre className='inline font-light'>Prompt text:</pre> <span className='font-semibold'>{content}</span></p>
               }
               {
                 imgUrl &&
