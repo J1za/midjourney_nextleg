@@ -1,7 +1,7 @@
 'use client'; // this is a client component 👈🏽
 import axios from 'axios';
 import { firestore } from '../db';
-import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { collection, doc, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import MyButton from '@/components/MyButton';
 
@@ -20,12 +20,21 @@ export default function Home() {
   const [response, setResponse] = useState('');
 
   useEffect(() => {
-    onSnapshot(collection(firestore, 'imgs'), snapshot => {
-      let allImgs: { createdAt: any; imgUrl: string, buttonMessageId?: string, buttons?: string[] }[] = snapshot.docs.map(
+    const imgsCollectionRef = collection(firestore, 'imgs');
+    const queryRef = query(imgsCollectionRef, orderBy('createdAt', 'desc'));
+    const unsubscribe = onSnapshot(queryRef, snapshot => {
+      let allImgs: {
+        createdAt: any;
+        imgUrl: string;
+        buttonMessageId?: string;
+        buttons?: string[]
+      }[] = snapshot.docs.map(
         doc => doc.data(),
-      ) as any;
+      ) as any;;
       setImgs(allImgs);
     });
+
+    return () => unsubscribe();
   }, []);
 
   return (
