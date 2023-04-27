@@ -3,6 +3,7 @@ import axios from 'axios';
 import { firestore } from '../db';
 import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
+import MyButton from '@/components/MyButton';
 
 const AUTH_TOKEN = '55d62488-0bc3-4f89-92d6-5bfca0732740';
 const endpoint = `https://api.thenextleg.io`;
@@ -95,32 +96,16 @@ export default function Home() {
               }
 
               {buttons &&
-                <div className='grid grid-flow-col grid-rows-1 gap-3 mt-1'>
+                <div className='flex flex-wrap gap-2 mt-1'>
                   {
                     buttons.filter(el => el !== 'V1' && el !== 'V2' && el !== 'V3' && el !== 'V4').map((btnText, idx) => (
-                      <button
+                      <MyButton
                         key={idx}
-                        className='px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-blue-700'
-                        onClick={async () => {
-                          console.log(`Submitting my prompt: ${text}`);
-                          setLoading(true);
-                          try {
-                            let r = await axios.post(
-                              `${endpoint}`,
-                              {
-                                "button": btnText,
-                                "buttonMessageId": buttonMessageId,
-                              },
-                              { headers },
-                            );
-                            setResponse(JSON.stringify(r.data, null, 2));
-                          } catch (e: any) {
-                            console.log(e);
-                            setError(e.message);
-                          }
-                          setLoading(false);
-                        }}
-                      >{loading ? 'Loading...' : btnText}</button>
+                        btnText={btnText}
+                        endpoint={endpoint}
+                        buttonMessageId={buttonMessageId!}
+                        headers={headers}
+                      />
                     ))
                   }
                 </div>
