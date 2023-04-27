@@ -24,7 +24,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className='container flex flex-col items-center justify-center h-screen mx-auto mt-60'>
+    <div className='container flex flex-col items-center h-screen mx-auto mt-60'>
       <div className='w-full px-20 mx-auto'>
         <div>
           {/* tailwindui.com */}
