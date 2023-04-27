@@ -44,9 +44,12 @@ export default function Home() {
   useEffect(() => {
     setLoadingImage(false)
   }, [imgs]);
+  useEffect(() => {
+    console.log(text)
+  }, [text]);
 
   const handleButtonAddText = (value: string) => {
-    setText(text + value);
+    setText((text + value));
   };
   return (
     <div className='container flex flex-col items-center h-screen mx-auto mt-20 sm:mt-60'>
@@ -96,21 +99,21 @@ export default function Home() {
             <div className='flex gap-1 mt-1'>
               <button
                 className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
-                onClick={() => handleButtonAddText('—v4')}
+                onClick={() => handleButtonAddText('--v 4')}
               >
-                —v4
+                --v 4
               </button>
               <button
                 className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
-                onClick={() => handleButtonAddText('—v5')}
+                onClick={() => handleButtonAddText('--v 5')}
               >
-                —v5
+                --v 5
               </button>
               <button
                 className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
-                onClick={() => handleButtonAddText('—')}
+                onClick={() => handleButtonAddText('--')}
               >
-                —
+                --
               </button>
             </div>
           </div>
