@@ -121,12 +121,12 @@ export default function Home() {
           Error: {error} */}
         </div>
       </div>
-      <div className='p-2 sm:p-0'>
+      <div className='p-2 mt-10 sm:p-0'>
         <div className='grid gap-4 sm:grid-cols-3'>
           {imgs.map(({ imgUrl, buttons, buttonMessageId, content }) => (
             <div key={buttonMessageId}>
               {content &&
-                <p> <pre className='inline'>Prompt text:</pre> <span className='font-semibold'>{content}</span></p>
+                <p> <span className='font-semibold'>{content}</span></p>
               }
               {
                 imgUrl &&
