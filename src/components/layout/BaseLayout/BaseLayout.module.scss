@@ -1,0 +1,14 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    @media screen and (max-width: 599px) {
+        padding-top: 56px;
+    }
+    main {
+        flex: 1 0 auto;
+    }
+    footer {
+        flex-shrink: 0;
+    }
+}
