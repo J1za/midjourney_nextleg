@@ -1,43 +1,13 @@
-import { db } from '../firebase';
-import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
 import MyButton from '@/components/MyButton';
 import Image from 'next/image';
 import BaseLayout from '@/components/layout/BaseLayout';
 import { TNLTypes } from 'tnl-midjourney-api';
 import InputPrompt from '@/components/InputPrompt';
-import { useActions } from "@/hooks/useActions";
+import ErrorMassage from '@/components/ErrorMassage';
+import { useImagesFirebase } from '@/hooks/useImagesFirebase';
 
 export default function Home() {
-  const [imgs, setImgs] = useState<{ createdAt: any; imgUrl: string, buttonMessageId?: string, buttons?: string[], content: string }[]>([]);
-  const { setLoadingPrompt, setLoadingButtonPrompt } = useActions();
-
-  useEffect(() => {
-    const imgsCollectionRef = collection(db, 'imgs');
-    const queryRef = query(imgsCollectionRef, orderBy('createdAt', 'desc'));
-    const unsubscribe = onSnapshot(queryRef, snapshot => {
-      let allImgs: {
-        createdAt: any;
-        imgUrl: string;
-        buttonMessageId?: string;
-        buttons?: string[]
-      }[] = snapshot.docs.map(
-        doc => doc.data(),
-      ) as any;;
-      setImgs(allImgs as any);
-    });
-
-    return () => (
-      unsubscribe()
-    );
-  }, []);
-  useEffect(() => {
-    setLoadingPrompt(false)
-    setLoadingButtonPrompt(false)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imgs]);
-
-
+  const { imgs } = useImagesFirebase();
   return (
     <BaseLayout>
       <div className='container flex flex-col items-center h-screen mx-auto mt-20 sm:mt-60'>
@@ -81,6 +51,7 @@ export default function Home() {
 
         </div>
       </div>
+      <ErrorMassage />
     </BaseLayout>
   );
 }

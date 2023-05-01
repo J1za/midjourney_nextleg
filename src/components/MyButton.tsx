@@ -4,8 +4,7 @@ import { TNLTypes } from 'tnl-midjourney-api';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from "@/hooks/useActions";
 import Loading from '@/components/Loading';
-import { toast } from 'react-toastify';
-
+import { useToast } from '@chakra-ui/react';
 type Props = {
     buttonMessageId: string;
     btnText: TNLTypes.ButtonTypes;
@@ -19,6 +18,7 @@ const headers = {
     Authorization: `Bearer ${AUTH_TOKEN}`,
 };
 export default function MyButton({ btnText, buttonMessageId }: Props) {
+    const toast = useToast();
     const { thlInfo: { isLoadingButtonPrompt } } = useTypedSelector(state => state);
     const { setLoadingButtonPrompt } = useActions();
     const [response, setResponse] = useState<any>(null);
@@ -42,13 +42,12 @@ export default function MyButton({ btnText, buttonMessageId }: Props) {
             setResponse(JSON.stringify(r.data, null, 2));
         } catch (e: any) {
             setError(e.message);
-            toast.error(`🦄 ${e.message}`, {
-                position: "top-center",
-                autoClose: 3000,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
+            toast({
+                position: 'top',
+                description: e.message,
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
             });
         }
     };

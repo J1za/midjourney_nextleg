@@ -1,5 +1,5 @@
 /* eslint-disable react/no-children-prop */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { tnl } from '@/services/core/nextLeg';
 import Loading from '@/components/Loading';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
@@ -10,41 +10,44 @@ import {
     FormControl,
     InputGroup,
     InputRightElement,
-    Tooltip
+    Tooltip,
+    InputLeftAddon
 } from '@chakra-ui/react';
 import { AiOutlineSend } from "react-icons/ai";
 import { RiImageAddFill } from "react-icons/ri";
 import { MdImageNotSupported } from "react-icons/md";
 import useWindowDimensions from '@/hooks/useWindowDimensions';
-import { toast } from 'react-toastify';
+import ButtonsSetting from '@/components/ButtonsSetting';
+import { useToast } from '@chakra-ui/react';
 
 function InputPrompt() {
-    const [text, setText] = useState('');
-    const [textLink, setTextLink] = useState('');
-    const [openLinkInput, setOpenLinkInput] = useState<boolean>(false);
-    const { thlInfo: { isLoadingPrompt } } = useTypedSelector(state => state);
+    const { thlInfo: { isLoadingPrompt }, buttonsSettingInfo: { variant, style } } = useTypedSelector(state => state);
     const { setLoadingPrompt } = useActions();
-    const [error, setError] = useState('');
-    const [response, setResponse] = useState('');
+    const toast = useToast();
+    const [text, setText] = useState<string>('');
+    const [textLink, setTextLink] = useState<string>('');
+    const [openLinkInput, setOpenLinkInput] = useState<boolean>(false);
     const { isMobile }: any = useWindowDimensions();
-    const handleButtonAddText = (value: string) => {
-        setText((text + value));
+    const handleOnChangeText = (value: string) => {
+        setText(value);
     };
+    // useEffect(() => {
+    //     setText(`${variant.code} ${style.code}`)
+    // }, [variant, style])
+
     const sendImage = async () => {
+        const textInput: string = `${text} ${variant.code} ${style.code}`
         if (text.length > 0) {
             setLoadingPrompt(true);
             try {
-                const response = !openLinkInput ? await tnl.imagine(text) : await tnl.img2img(text, textLink)
-                setResponse(JSON.stringify(response, null, 2));
+                const response = !openLinkInput ? await tnl.imagine(textInput) : await tnl.img2img(textInput, textLink)
             } catch (e: any) {
-                setError(e.message);
-                toast.error(`🦄 ${e.message}`, {
-                    position: "top-center",
-                    autoClose: 3000,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    theme: "colored",
+                toast({
+                    position: 'top',
+                    description: e.message,
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
                 });
             }
         }
@@ -66,14 +69,20 @@ function InputPrompt() {
                 >
                     <FormControl isRequired className='flex flex-wrap items-center gap-2 sm:flex-nowrap'>
                         <InputGroup>
+                            {variant.code &&
+                                <InputLeftAddon paddingX={2} children={variant.code} />
+                            }
+                            {style.code &&
+                                <InputLeftAddon borderRadius={0} paddingX={2} children={style.code} />
+                            }
                             <Input
                                 size='md'
                                 bg='whitesmoke'
                                 border={0}
                                 fontSize={17}
-                                required
+                                required={true}
                                 value={text}
-                                onChange={e => setText(e.target.value)}
+                                onChange={e => handleOnChangeText(e.target.value)}
                                 placeholder='Enter your prompt here'
                                 type="text"
                             />
@@ -84,6 +93,7 @@ function InputPrompt() {
                                 bg='whitesmoke'
                                 border={0}
                                 fontSize={17}
+                                required={false}
                                 value={textLink}
                                 onChange={e => setTextLink(e.target.value)}
                                 placeholder='Enter your link image here'
@@ -110,29 +120,10 @@ function InputPrompt() {
                         </Button>
                     </FormControl>
                 </form>
-                <div className='flex gap-1 mt-2'>
-                    <button
-                        className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
-                        onClick={() => handleButtonAddText('--v 4')}
-                    >
-                        --v 4
-                    </button>
-                    <button
-                        className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
-                        onClick={() => handleButtonAddText('--v 5')}
-                    >
-                        --v 5
-                    </button>
-                    <button
-                        className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
-                        onClick={() => handleButtonAddText('--')}
-                    >
-                        --
-                    </button>
+                <div className='mt-2'>
+                    <ButtonsSetting />
                 </div>
             </div>
-            {/* <pre>Response Message: {response}</pre>
-          Error: {error} */}
             {isLoadingPrompt && <Loading />}
         </div>
     )
