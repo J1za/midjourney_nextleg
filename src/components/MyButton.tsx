@@ -4,6 +4,7 @@ import { TNLTypes } from 'tnl-midjourney-api';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from "@/hooks/useActions";
 import Loading from '@/components/Loading';
+import { toast } from 'react-toastify';
 
 type Props = {
     buttonMessageId: string;
@@ -41,6 +42,14 @@ export default function MyButton({ btnText, buttonMessageId }: Props) {
             setResponse(JSON.stringify(r.data, null, 2));
         } catch (e: any) {
             setError(e.message);
+            toast.error(`🦄 ${e.message}`, {
+                position: "top-center",
+                autoClose: 3000,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored",
+            });
         }
     };
 

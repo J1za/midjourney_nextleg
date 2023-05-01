@@ -1,6 +1,5 @@
 /* eslint-disable react/no-children-prop */
 import { useState } from 'react';
-import dynamic from 'next/dynamic'
 import { tnl } from '@/services/core/nextLeg';
 import Loading from '@/components/Loading';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
@@ -17,6 +16,7 @@ import { AiOutlineSend } from "react-icons/ai";
 import { RiImageAddFill } from "react-icons/ri";
 import { MdImageNotSupported } from "react-icons/md";
 import useWindowDimensions from '@/hooks/useWindowDimensions';
+import { toast } from 'react-toastify';
 
 function InputPrompt() {
     const [text, setText] = useState('');
@@ -37,8 +37,15 @@ function InputPrompt() {
                 const response = !openLinkInput ? await tnl.imagine(text) : await tnl.img2img(text, textLink)
                 setResponse(JSON.stringify(response, null, 2));
             } catch (e: any) {
-                console.log(e);
                 setError(e.message);
+                toast.error(`🦄 ${e.message}`, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "colored",
+                });
             }
         }
 

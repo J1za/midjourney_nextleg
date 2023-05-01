@@ -21,17 +21,20 @@
 //   "content": "your-original-prompt"
 // }
 import { db } from '@/firebase';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, setDoc, collection, doc } from 'firebase/firestore';
 
 export default async function handler(req: any, res: any) {
   const { imageUrl, buttonMessageId, buttons, content } = req.body as any;
-  await addDoc(collection(db, 'imgs'), {
+  imageUrl ? await addDoc(collection(db, 'imgs'), {
     imgUrl: imageUrl,
     createdAt: new Date(), // serverTimestamp() -> Not all clients will have the same time
     buttonMessageId,
     buttons,
     content,
-  });
+  }) :
+    await setDoc(doc(db, "errorMsg", "error"), {
+      error: content,
+    });
 
   res.status(200).json({ name: 'John Doe' });
 }
