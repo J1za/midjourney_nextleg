@@ -1,22 +1,16 @@
-'use client'; // this is a client component 👈🏽
-import axios from 'axios';
 import { db } from '../firebase';
-import { collection, doc, onSnapshot, query, orderBy } from 'firebase/firestore';
+import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import MyButton from '@/components/MyButton';
 import Image from 'next/image';
-import Loading from '@/components/Loading';
 import BaseLayout from '@/components/layout/BaseLayout';
-import { tnl } from '@/services/core/nextLeg';
 import { TNLTypes } from 'tnl-midjourney-api';
+import InputPrompt from '@/components/InputPrompt';
+import { useActions } from "@/hooks/useActions";
 
 export default function Home() {
-  const [text, setText] = useState('');
   const [imgs, setImgs] = useState<{ createdAt: any; imgUrl: string, buttonMessageId?: string, buttons?: string[], content: string }[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [loadingImage, setLoadingImage] = useState(false);
-  const [error, setError] = useState('');
-  const [response, setResponse] = useState('');
+  const { setLoadingPrompt, setLoadingButtonPrompt } = useActions();
 
   useEffect(() => {
     const imgsCollectionRef = collection(db, 'imgs');
@@ -38,73 +32,17 @@ export default function Home() {
     );
   }, []);
   useEffect(() => {
-    setLoadingImage(false)
+    setLoadingPrompt(false)
+    setLoadingButtonPrompt(false)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imgs]);
 
-  const handleButtonAddText = (value: string) => {
-    setText((text + value));
-  };
+
   return (
     <BaseLayout>
       <div className='container flex flex-col items-center h-screen mx-auto mt-20 sm:mt-60'>
         <div className='w-full px-5 mx-auto sm:px-20'>
-          <div className='relative'>
-            <div>
-              <label
-                htmlFor='email'
-                className='block text-lg font-medium leading-5'
-              >
-                Prompt
-              </label>
-              <div className='flex mt-2 space-x-2'>
-                <input
-                  value={text}
-                  onChange={e => setText(e.target.value)}
-                  className='block w-full px-4 border-0 rounded-md shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-base sm:leading-6'
-                  placeholder='Enter your prompt here'
-                />
-                <button
-                  className='px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700'
-                  onClick={async () => {
-                    setLoadingImage(true);
-                    setLoading(true);
-                    try {
-                      const response = await tnl.imagine(text)
-                      setResponse(JSON.stringify(response, null, 2));
-                    } catch (e: any) {
-                      console.log(e);
-                      setError(e.message);
-                    }
-                    setLoading(false);
-                  }}
-                >
-                  {loading ? 'Submitting...' : 'Submit'}
-                </button>
-              </div>
-              <div className='flex gap-1 mt-1'>
-                <button
-                  className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
-                  onClick={() => handleButtonAddText('--v 4')}
-                >
-                  --v 4
-                </button>
-                <button
-                  className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
-                  onClick={() => handleButtonAddText('--v 5')}
-                >
-                  --v 5
-                </button>
-                <button
-                  className='px-4 py-1 text-white bg-gray-500 rounded hover:bg-gray-700'
-                  onClick={() => handleButtonAddText('--')}
-                >
-                  --
-                </button>
-              </div>
-            </div>
-            {/* <pre>Response Message: {response}</pre>
-          Error: {error} */}
-          </div>
+          <InputPrompt />
         </div>
         <div className='p-2 mt-10 sm:p-0'>
           <div className='grid gap-4 sm:grid-cols-3'>
@@ -130,7 +68,6 @@ export default function Home() {
                           key={idx}
                           btnText={btnText as TNLTypes.ButtonTypes}
                           buttonMessageId={buttonMessageId!}
-                          onClick={() => setLoadingImage(true)}
                         />
                       ))
                     }
@@ -143,7 +80,6 @@ export default function Home() {
           </div>
 
         </div>
-        {loadingImage && <Loading />}
       </div>
     </BaseLayout>
   );

@@ -1,6 +1,6 @@
 import '@/assets/styles/globals.css'
 import { ChakraProvider } from '@chakra-ui/react';
-import { store } from '@/components/store';
+import { store } from '@/store';
 import { Provider } from 'react-redux'
 
 function MyApp({ Component, pageProps }: any) {
