@@ -41,7 +41,7 @@ export default function Home() {
   return (
     <BaseLayout>
       <div className='container flex flex-col items-center h-screen mx-auto mt-20 sm:mt-60'>
-        <div className='w-full px-5 mx-auto sm:px-20'>
+        <div className='w-full px-2 mx-auto sm:px-0'>
           <InputPrompt />
         </div>
         <div className='p-2 mt-10 sm:p-0'>
