@@ -7,15 +7,10 @@ import MyButton from '@/components/MyButton';
 import Image from 'next/image';
 import Loading from '@/components/Loading';
 import BaseLayout from '@/components/layout/BaseLayout';
-
-const AUTH_TOKEN = '55d62488-0bc3-4f89-92d6-5bfca0732740';
-const endpoint = `https://api.thenextleg.io`;
+import { tnl } from '@/services/core/nextLeg';
+import { TNLTypes } from 'tnl-midjourney-api';
 
 export default function Home() {
-  const headers = {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${AUTH_TOKEN}`,
-  };
   const [text, setText] = useState('');
   const [imgs, setImgs] = useState<{ createdAt: any; imgUrl: string, buttonMessageId?: string, buttons?: string[], content: string }[]>([]);
   const [loading, setLoading] = useState(false);
@@ -74,15 +69,8 @@ export default function Home() {
                     setLoadingImage(true);
                     setLoading(true);
                     try {
-                      let r = await axios.post(
-                        `${endpoint}`,
-                        {
-                          cmd: 'imagine',
-                          msg: text,
-                        },
-                        { headers },
-                      );
-                      setResponse(JSON.stringify(r.data, null, 2));
+                      const response = await tnl.imagine(text)
+                      setResponse(JSON.stringify(response, null, 2));
                     } catch (e: any) {
                       console.log(e);
                       setError(e.message);
@@ -121,21 +109,18 @@ export default function Home() {
         <div className='p-2 mt-10 sm:p-0'>
           <div className='grid gap-4 sm:grid-cols-3'>
             {imgs.map(({ imgUrl, buttons, buttonMessageId, content }) => (
-              <div key={buttonMessageId}>
+              imgUrl && <div key={buttonMessageId}>
                 {content &&
                   <p> <span className='font-semibold'>{content}</span></p>
                 }
-                {
-                  imgUrl &&
-                  <Image
-                    src={imgUrl}
-                    className='w-full'
-                    key={imgUrl}
-                    alt='nothing'
-                    width={400}
-                    height={400}
-                  />
-                }
+                <Image
+                  src={imgUrl}
+                  className='w-full'
+                  key={imgUrl}
+                  alt='nothing'
+                  width={400}
+                  height={400}
+                />
 
                 {buttons &&
                   <div className='flex flex-wrap gap-2 mt-1'>
@@ -143,10 +128,8 @@ export default function Home() {
                       buttons.filter(el => el !== 'V1' && el !== 'V2' && el !== 'V3' && el !== 'V4').map((btnText, idx) => (
                         <MyButton
                           key={idx}
-                          btnText={btnText}
-                          endpoint={endpoint}
+                          btnText={btnText as TNLTypes.ButtonTypes}
                           buttonMessageId={buttonMessageId!}
-                          headers={headers}
                           onClick={() => setLoadingImage(true)}
                         />
                       ))

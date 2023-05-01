@@ -25,8 +25,6 @@ import { addDoc, collection } from 'firebase/firestore';
 
 export default async function handler(req: any, res: any) {
   const { imageUrl, buttonMessageId, buttons, content } = req.body as any;
-  console.log(req.body);
-
   await addDoc(collection(db, 'imgs'), {
     imgUrl: imageUrl,
     createdAt: new Date(), // serverTimestamp() -> Not all clients will have the same time
