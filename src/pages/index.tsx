@@ -6,7 +6,7 @@ import { TNLTypes } from 'tnl-midjourney-api';
 import InputPrompt from '@/components/InputPrompt';
 import ErrorMassage from '@/components/ErrorMassage';
 import { useImagesFirebase } from '@/hooks/useImagesFirebase';
-import { Button } from '@chakra-ui/react';
+import { Button, Link } from '@chakra-ui/react';
 
 const blockAdvertising = {
   imgUrl: '/images/Product-Advertising.jpg',
@@ -25,7 +25,7 @@ export default function Home() {
         <div className='w-full px-2 mx-auto sm:px-0'>
           <InputPrompt />
         </div>
-        <div className='p-2 mt-10 sm:p-0'>
+        <div className='w-full p-2 mt-10 sm:p-0'>
           <div className='grid gap-4 sm:grid-cols-3'>
             {imgs.length > 0 && allImgs.map(({ imgUrl, buttons, buttonMessageId, content }) => (
 
@@ -43,17 +43,19 @@ export default function Home() {
                 {buttons && (
                   <div className='flex flex-wrap gap-2 mt-1'>
                     {buttons
-                      .filter((el) => el !== 'V1' && el !== 'V2' && el !== 'V3' && el !== 'V4' && el !== 'Web')
+                      .filter((el) => el !== 'V1' && el !== 'V2' && el !== 'V3' && el !== 'V4')
                       .map((btnText, idx) => (
                         btnText == 'Learn More'
                           ?
                           <Button key={idx} colorScheme='blue'>{btnText}</Button>
                           :
-                          <MyButton
-                            key={idx}
-                            btnText={btnText as TNLTypes.ButtonTypes}
-                            buttonMessageId={buttonMessageId!}
-                          />
+                          btnText == 'Web' ? <Link href={imgUrl} isExternal><Button key={idx} size='sm' colorScheme='blue'>{btnText}</Button></Link>
+                            :
+                            <MyButton
+                              key={idx}
+                              btnText={btnText as TNLTypes.ButtonTypes}
+                              buttonMessageId={buttonMessageId!}
+                            />
                       ))}
                   </div>
                 )}

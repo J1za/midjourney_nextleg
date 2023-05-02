@@ -1,5 +1,5 @@
 /* eslint-disable react/no-children-prop */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { tnl } from '@/services/core/nextLeg';
 import Loading from '@/components/Loading';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
@@ -21,24 +21,27 @@ import useWindowDimensions from '@/hooks/useWindowDimensions';
 import ButtonsSetting from '@/components/ButtonsSetting';
 import { useToast } from '@chakra-ui/react';
 
+import QueueOrder from './QueueOrder';
+
 function InputPrompt() {
-    const { thlInfo: { isLoadingPrompt }, buttonsSettingInfo: { variant, style, checkedSettings } } = useTypedSelector(state => state);
-    const { setLoadingPrompt, setCheckedSetting } = useActions();
+    const { thlInfo: { isLoadingPrompt, newRequest }, buttonsSettingInfo: { variant, style, checkedSettings } } = useTypedSelector(state => state);
+    const { setLoadingPrompt, setCheckedSetting, setNewRequest } = useActions();
     const toast = useToast();
     const [text, setText] = useState<string>('');
     const [textLink, setTextLink] = useState<string>('');
     const [openLinkInput, setOpenLinkInput] = useState<boolean>(false);
     const { isMobile }: any = useWindowDimensions();
+
     const handleOnChangeText = (value: string) => {
         setText(value);
     };
-
     const sendImage = async () => {
         const textInput: string = `${text} ${variant.code} ${style.code}`
         if (text.length > 0) {
             setLoadingPrompt(true);
             try {
                 const response = !openLinkInput ? await tnl.imagine(textInput) : await tnl.img2img(textInput, textLink);
+                setNewRequest({ prompt: textInput, messageId: response.messageId })
             } catch (e: any) {
                 setLoadingPrompt(false);
                 toast({
@@ -64,6 +67,18 @@ function InputPrompt() {
                         Settings
                     </Checkbox>
                 </label>
+                <div className='py-2'>
+                    <b>Queue:</b>
+                    <div className='inline-flex gap-4 ml-2'>
+                        {newRequest.map((item, index) => (
+                            <div key={item.messageId}>
+                                <QueueOrder messageId={item.messageId} prompt={item.prompt} />
+                                {index !== newRequest.length - 1 && " ,"}
+                            </div>
+                        ))}
+
+                    </div>
+                </div>
                 <form
                     onSubmit={e => {
                         e.preventDefault();

@@ -25,7 +25,7 @@ const initialState = {
         name: '',
         code: '',
     } as IButtonsInfo,
-    checkedSettings: true
+    checkedSettings: true,
 };
 
 export const buttonsSetting = createSlice({
