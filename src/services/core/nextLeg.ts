@@ -1,5 +1,5 @@
 import { TNL } from 'tnl-midjourney-api';
 
-const TNL_API_KEY = '55d62488-0bc3-4f89-92d6-5bfca0732740';
-const tnl = new TNL(TNL_API_KEY);
-export { tnl };
+const AUTH_TOKEN = '4801496e-c5a4-43b6-91b4-bc0e22819d29';
+const tnl = new TNL(AUTH_TOKEN);
+export { tnl, AUTH_TOKEN };

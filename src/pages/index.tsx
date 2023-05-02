@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import MyButton from '@/components/MyButton';
 import Image from 'next/image';
 import BaseLayout from '@/components/layout/BaseLayout';
@@ -5,9 +6,19 @@ import { TNLTypes } from 'tnl-midjourney-api';
 import InputPrompt from '@/components/InputPrompt';
 import ErrorMassage from '@/components/ErrorMassage';
 import { useImagesFirebase } from '@/hooks/useImagesFirebase';
+import { Button } from '@chakra-ui/react';
+
+const blockAdvertising = {
+  imgUrl: '/images/Product-Advertising.jpg',
+  buttonMessageId: 'ad-block-button',
+  content: 'Check out our new product advertising!',
+  buttons: ['Learn More']
+};
 
 export default function Home() {
   const { imgs } = useImagesFirebase();
+  const allImgs = [...imgs];
+  imgs && allImgs.splice(4, 0, blockAdvertising as any);
   return (
     <BaseLayout>
       <div className='container flex flex-col items-center h-screen mx-auto mt-20 sm:mt-60'>
@@ -16,11 +27,10 @@ export default function Home() {
         </div>
         <div className='p-2 mt-10 sm:p-0'>
           <div className='grid gap-4 sm:grid-cols-3'>
-            {imgs.map(({ imgUrl, buttons, buttonMessageId, content }) => (
-              imgUrl && <div key={buttonMessageId}>
-                {content &&
-                  <p> <span className='font-semibold'>{content}</span></p>
-                }
+            {imgs.length > 0 && allImgs.map(({ imgUrl, buttons, buttonMessageId, content }) => (
+
+              imgUrl && <div key={buttonMessageId} className='flex flex-col justify-between h-full'>
+                {content && <p><span className='font-semibold'>{content}</span></p>}
                 <Image
                   src={imgUrl}
                   className='w-full'
@@ -30,19 +40,23 @@ export default function Home() {
                   height={400}
                 />
 
-                {buttons &&
+                {buttons && (
                   <div className='flex flex-wrap gap-2 mt-1'>
-                    {
-                      buttons.filter(el => el !== 'V1' && el !== 'V2' && el !== 'V3' && el !== 'V4').map((btnText, idx) => (
-                        <MyButton
-                          key={idx}
-                          btnText={btnText as TNLTypes.ButtonTypes}
-                          buttonMessageId={buttonMessageId!}
-                        />
-                      ))
-                    }
+                    {buttons
+                      .filter((el) => el !== 'V1' && el !== 'V2' && el !== 'V3' && el !== 'V4' && el !== 'Web')
+                      .map((btnText, idx) => (
+                        btnText == 'Learn More'
+                          ?
+                          <Button key={idx} colorScheme='blue'>{btnText}</Button>
+                          :
+                          <MyButton
+                            key={idx}
+                            btnText={btnText as TNLTypes.ButtonTypes}
+                            buttonMessageId={buttonMessageId!}
+                          />
+                      ))}
                   </div>
-                }
+                )}
 
               </div>
 

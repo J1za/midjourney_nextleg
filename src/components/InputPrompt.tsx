@@ -38,7 +38,7 @@ function InputPrompt() {
         if (text.length > 0) {
             setLoadingPrompt(true);
             try {
-                const response = !openLinkInput ? await tnl.imagine(textInput) : await tnl.img2img(textInput, textLink)
+                const response = !openLinkInput ? await tnl.imagine(textInput) : await tnl.img2img(textInput, textLink);
             } catch (e: any) {
                 setLoadingPrompt(false);
                 toast({

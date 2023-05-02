@@ -5,7 +5,9 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import {
     HStack,
     useRadioGroup,
-    useToast
+    useToast,
+    Box,
+    Skeleton
 } from "@chakra-ui/react";
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from "@/hooks/useActions";
@@ -41,7 +43,7 @@ function ButtonsSetting() {
     const group1 = getRootPropsVersion();
     const group2 = getRootPropsStyle();
     return (
-        <div className={`flex gap-5 overflow-hidden transition-all ${!checkedSettings ? 'max-h-0' : 'max-h-44'}`}>
+        <div className={`flex flex-wrap gap-5 overflow-hidden transition-all ${!checkedSettings ? 'max-h-0' : 'max-h-96'}`}>
             <HStack {...group1} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
                 {!loading &&
                     dataButtons.buttons.version.map((el) => {
@@ -54,7 +56,7 @@ function ButtonsSetting() {
                     })
                 }
             </HStack>
-            <HStack {...group2} className='!grid max-h-52 gap-1 auto-rows-min overflow-y-auto'>
+            <HStack {...group2} className='!grid max-h-52 gap-1 auto-rows-min overflow-y-auto max-h-'>
                 {!loading &&
                     dataButtons.buttons.style.map((el) => {
                         const radio = getRadioPropsStyle({ value: el.name });
@@ -66,6 +68,7 @@ function ButtonsSetting() {
                     })
                 }
             </HStack>
+            <Skeleton borderRadius={6} className='w-full sm:w-60 h-44 sm:ml-auto' />
         </div>
     )
 }

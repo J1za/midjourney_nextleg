@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
+import { AUTH_TOKEN } from '@/services/core/nextLeg';
 import axios from 'axios';
 import { TNLTypes } from 'tnl-midjourney-api';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from "@/hooks/useActions";
 import Loading from '@/components/Loading';
-import { useToast } from '@chakra-ui/react';
+import { useToast, Button } from '@chakra-ui/react';
 type Props = {
     buttonMessageId: string;
     btnText: TNLTypes.ButtonTypes;
 };
 
-const AUTH_TOKEN = '55d62488-0bc3-4f89-92d6-5bfca0732740';
 const endpoint = `https://api.thenextleg.io`;
 
 const headers = {
@@ -56,13 +56,14 @@ export default function MyButton({ btnText, buttonMessageId }: Props) {
 
     return (
         <div>
-            <button
-                className='px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-blue-700'
+            <Button
+                colorScheme='blue'
+                size='sm'
                 onClick={handleClick}
                 disabled={isLoadingButtonPrompt}
             >
                 {isLoadingButtonPrompt && btnIdLoading == buttonMessageId && btnTextLoading == btnText ? 'Loading...' : btnText}
-            </button>
+            </Button>
             {isLoadingButtonPrompt && btnIdLoading == buttonMessageId && btnTextLoading == btnText && <Loading />}
         </div>
     );
