@@ -1,5 +1,5 @@
 /* eslint-disable react/no-children-prop */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { tnl } from '@/services/core/nextLeg';
 import Loading from '@/components/Loading';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
@@ -11,7 +11,8 @@ import {
     InputGroup,
     InputRightElement,
     Tooltip,
-    InputLeftAddon
+    InputLeftAddon,
+    Checkbox
 } from '@chakra-ui/react';
 import { AiOutlineSend } from "react-icons/ai";
 import { RiImageAddFill } from "react-icons/ri";
@@ -21,8 +22,8 @@ import ButtonsSetting from '@/components/ButtonsSetting';
 import { useToast } from '@chakra-ui/react';
 
 function InputPrompt() {
-    const { thlInfo: { isLoadingPrompt }, buttonsSettingInfo: { variant, style } } = useTypedSelector(state => state);
-    const { setLoadingPrompt } = useActions();
+    const { thlInfo: { isLoadingPrompt }, buttonsSettingInfo: { variant, style, checkedSettings } } = useTypedSelector(state => state);
+    const { setLoadingPrompt, setCheckedSetting } = useActions();
     const toast = useToast();
     const [text, setText] = useState<string>('');
     const [textLink, setTextLink] = useState<string>('');
@@ -31,9 +32,6 @@ function InputPrompt() {
     const handleOnChangeText = (value: string) => {
         setText(value);
     };
-    // useEffect(() => {
-    //     setText(`${variant.code} ${style.code}`)
-    // }, [variant, style])
 
     const sendImage = async () => {
         const textInput: string = `${text} ${variant.code} ${style.code}`
@@ -42,6 +40,7 @@ function InputPrompt() {
             try {
                 const response = !openLinkInput ? await tnl.imagine(textInput) : await tnl.img2img(textInput, textLink)
             } catch (e: any) {
+                setLoadingPrompt(false);
                 toast({
                     position: 'top',
                     description: e.message,
@@ -61,6 +60,9 @@ function InputPrompt() {
                     className='block mb-2 text-lg font-medium leading-5'
                 >
                     Prompt
+                    <Checkbox size='md' marginLeft={10} colorScheme='green' defaultChecked={checkedSettings} onChange={(e) => setCheckedSetting(e.target.checked)}>
+                        Settings
+                    </Checkbox>
                 </label>
                 <form
                     onSubmit={e => {
@@ -69,10 +71,10 @@ function InputPrompt() {
                 >
                     <FormControl isRequired className='flex flex-wrap items-center gap-2 sm:flex-nowrap'>
                         <InputGroup>
-                            {variant.code &&
+                            {variant.code && checkedSettings &&
                                 <InputLeftAddon paddingX={2} children={variant.code} />
                             }
-                            {style.code &&
+                            {style.code && checkedSettings &&
                                 <InputLeftAddon borderRadius={0} paddingX={2} children={style.code} />
                             }
                             <Input

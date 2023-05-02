@@ -15,7 +15,7 @@ import { IButtonsSetting } from '@/store/slices/buttonsSetting.slice';
 
 function ButtonsSetting() {
     const toast = useToast();
-    const { buttonsSettingInfo: { variant } } = useTypedSelector(state => state);
+    const { buttonsSettingInfo: { variant, checkedSettings } } = useTypedSelector(state => state);
     const { changeVariant, changeStyle } = useActions();
     const [value, loading, error] = useDocument(
         doc(db, 'buttons', 'all'),
@@ -41,7 +41,7 @@ function ButtonsSetting() {
     const group1 = getRootPropsVersion();
     const group2 = getRootPropsStyle();
     return (
-        <div className='flex gap-5'>
+        <div className={`flex gap-5 overflow-hidden transition-all ${!checkedSettings ? 'max-h-0' : 'max-h-44'}`}>
             <HStack {...group1} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
                 {!loading &&
                     dataButtons.buttons.version.map((el) => {

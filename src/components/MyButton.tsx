@@ -20,7 +20,7 @@ const headers = {
 export default function MyButton({ btnText, buttonMessageId }: Props) {
     const toast = useToast();
     const { thlInfo: { isLoadingButtonPrompt } } = useTypedSelector(state => state);
-    const { setLoadingButtonPrompt } = useActions();
+    const { setLoadingButtonPrompt, setLoadingPrompt } = useActions();
     const [response, setResponse] = useState<any>(null);
     const [error, setError] = useState(null);
     const [btnIdLoading, setBtnIdLoading] = useState<string>();
@@ -42,6 +42,8 @@ export default function MyButton({ btnText, buttonMessageId }: Props) {
             setResponse(JSON.stringify(r.data, null, 2));
         } catch (e: any) {
             setError(e.message);
+            setLoadingButtonPrompt(false);
+            setLoadingPrompt(false);
             toast({
                 position: 'top',
                 description: e.message,

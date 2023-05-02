@@ -25,7 +25,7 @@ const initialState = {
         name: '',
         code: '',
     } as IButtonsInfo,
-
+    checkedSettings: true
 };
 
 export const buttonsSetting = createSlice({
@@ -37,6 +37,9 @@ export const buttonsSetting = createSlice({
         },
         changeStyle: (state, action: PayloadAction<IButtonsInfo>) => {
             state.style = action.payload;
+        },
+        setCheckedSetting: (state, action: PayloadAction<boolean>) => {
+            state.checkedSettings = action.payload;
         },
     },
 })
