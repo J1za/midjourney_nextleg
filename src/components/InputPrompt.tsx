@@ -69,7 +69,7 @@ function InputPrompt() {
                 </label>
                 <div className='py-2'>
                     <b>Queue:</b>
-                    <div className='inline-flex gap-4 ml-2'>
+                    <div className='inline-flex flex-wrap gap-4 ml-2'>
                         {newRequest.map((item, index) => (
                             <div key={item.messageId}>
                                 <QueueOrder messageId={item.messageId} prompt={item.prompt} />
