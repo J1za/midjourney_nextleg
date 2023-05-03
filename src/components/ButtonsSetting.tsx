@@ -22,7 +22,6 @@ function ButtonsSetting() {
         }
     );
     const dataButtons = value?.data() as IButtonsSetting;
-    console.log(dataButtons)
     const handleChangeVariant = (name: string, code: string) => {
         changeVariant({ name, code })
     }
@@ -90,7 +89,7 @@ function ButtonsSetting() {
                     })
                 }
             </HStack>
-            <HStack {...group2} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
+            <HStack {...group2} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
                 {!loading &&
                     dataButtons.buttons.style.map((el) => {
                         const radio = getRadioPropsStyle({ value: el.name });

@@ -18,7 +18,7 @@ const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${AUTH_TOKEN}`,
 };
-export default function MyButton({ btnText, buttonMessageId, content }: Props) {
+function MyButton({ btnText, buttonMessageId, content }: Props) {
     const toast = useToast();
     const { thlInfo: { isLoadingButtonPrompt } } = useTypedSelector(state => state);
     const { setLoadingButtonPrompt, setLoadingPrompt, setNewRequest } = useActions();
@@ -70,3 +70,4 @@ export default function MyButton({ btnText, buttonMessageId, content }: Props) {
         </div>
     );
 }
+export default MyButton;

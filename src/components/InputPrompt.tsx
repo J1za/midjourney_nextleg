@@ -1,11 +1,9 @@
 /* eslint-disable react/no-children-prop */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { tnl } from '@/services/core/nextLeg';
 import Loading from '@/components/Loading';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from "@/hooks/useActions";
-import { addDoc, setDoc, collection, doc } from 'firebase/firestore';
-import { db } from '@/firebase';
 import {
     Button,
     Input,
@@ -38,24 +36,23 @@ function InputPrompt() {
         setText(value);
     };
     const sendImage = async () => {
-
         const textInput: string = `${text} ${variant.code} ${style.code}`
-        // if (text.length > 0) {
-        //     setLoadingPrompt(true);
-        //     try {
-        //         const response = !openLinkInput ? await tnl.imagine(textInput) : await tnl.img2img(textInput, textLink);
-        //         setNewRequest({ prompt: textInput, messageId: response.messageId })
-        //     } catch (e: any) {
-        //         setLoadingPrompt(false);
-        //         toast({
-        //             position: 'top',
-        //             description: e.message,
-        //             status: 'error',
-        //             duration: 3000,
-        //             isClosable: true,
-        //         });
-        //     }
-        // }
+        if (text.length > 0) {
+            setLoadingPrompt(true);
+            try {
+                const response = !openLinkInput ? await tnl.imagine(textInput) : await tnl.img2img(textInput, textLink);
+                setNewRequest({ prompt: textInput, messageId: response.messageId })
+            } catch (e: any) {
+                setLoadingPrompt(false);
+                toast({
+                    position: 'top',
+                    description: e.message,
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                });
+            }
+        }
 
     }
     return (
@@ -70,13 +67,13 @@ function InputPrompt() {
                         Settings
                     </Checkbox>
                 </label>
-                <div className='py-2'>
+                <div className='flex flex-wrap py-2'>
                     <b>Queue:</b>
-                    <div className='inline-flex flex-wrap gap-4 ml-2'>
+                    <div className='inline-flex flex-wrap ml-2'>
                         {newRequest.map((item, index) => (
                             <div key={item.messageId}>
                                 <QueueOrder messageId={item.messageId} prompt={item.prompt} />
-                                {index !== newRequest.length - 1 && " ,"}
+                                {index !== newRequest.length - 1 && " , "}
                             </div>
                         ))}
 

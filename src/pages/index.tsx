@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import MyButton from '@/components/MyButton';
 import Image from 'next/image';
 import BaseLayout from '@/components/layout/BaseLayout';
@@ -43,7 +42,6 @@ export default function Home() {
                 {buttons && (
                   <div className='flex flex-wrap gap-2 mt-1'>
                     {buttons
-                      .filter((el) => el !== 'V1' && el !== 'V2' && el !== 'V3' && el !== 'V4')
                       .map((btnText, idx) => (
                         btnText == 'Learn More'
                           ?

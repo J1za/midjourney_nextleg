@@ -16,6 +16,7 @@ function QueueOrder({ messageId, prompt }: IQueueOrder) {
 
     useEffect(() => {
         if (data) {
+            console.log(data)
             setProgress(data.progress);
             // const oldStorage: Array<any> = JSON.parse(localStorage.getItem('queue')!);
             // const queueData = { progress: progress, prompt: newRequest.prompt, messageId: newRequest.messageId };
@@ -37,7 +38,7 @@ function QueueOrder({ messageId, prompt }: IQueueOrder) {
         return null;
     }
     return (
-        <pre className='inline'>{prompt} <span className='underline underline-offset-2'>{progress ?? 0}%</span></pre>
+        <p className='inline text-[15px]' style={{ fontFamily: 'monospace' }}>{prompt} <span className='underline underline-offset-2'>{progress ?? 0}%</span></p>
     )
 }
 
