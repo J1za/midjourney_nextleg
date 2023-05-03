@@ -78,7 +78,7 @@ function ButtonsSetting() {
 
     return (
         <div className={`flex flex-wrap gap-5 overflow-hidden transition-all ${!checkedSettings ? 'max-h-0' : 'max-h-[2000px]'}`}>
-            <HStack {...group1} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
+            <HStack  {...group1} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
                 {!loading &&
                     dataButtons.buttons.version.map((el) => {
                         const radio = getRadioProps({ value: el.name });
@@ -90,7 +90,7 @@ function ButtonsSetting() {
                     })
                 }
             </HStack>
-            <HStack {...group2} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
+            <HStack {...group2} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
                 {!loading &&
                     dataButtons.buttons.style.map((el) => {
                         const radio = getRadioPropsStyle({ value: el.name });
@@ -102,7 +102,7 @@ function ButtonsSetting() {
                     })
                 }
             </HStack>
-            <HStack {...group3} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
+            <HStack {...group3} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
                 {!loading &&
                     dataButtons.buttons.c3.map((el) => {
                         const radio = getRadioPropsC3({ value: el.name });
@@ -114,7 +114,7 @@ function ButtonsSetting() {
                     })
                 }
             </HStack>
-            <HStack {...group4} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
+            <HStack {...group4} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
                 {!loading &&
                     dataButtons.buttons.c4.map((el) => {
                         const radio = getRadioPropsC4({ value: el.name });
@@ -126,7 +126,7 @@ function ButtonsSetting() {
                     })
                 }
             </HStack>
-            <HStack {...group5} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
+            <HStack {...group5} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
                 {!loading &&
                     dataButtons.buttons.c5.map((el) => {
                         const radio = getRadioPropsC5({ value: el.name });
@@ -138,7 +138,7 @@ function ButtonsSetting() {
                     })
                 }
             </HStack>
-            <HStack {...group6} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
+            <HStack {...group6} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
                 {!loading &&
                     dataButtons.buttons.c6.map((el) => {
                         const radio = getRadioPropsC6({ value: el.name });
@@ -150,7 +150,7 @@ function ButtonsSetting() {
                     })
                 }
             </HStack>
-            <HStack {...group7} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
+            <HStack {...group7} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
                 {!loading &&
                     dataButtons.buttons.c7.map((el) => {
                         const radio = getRadioPropsC7({ value: el.name });
