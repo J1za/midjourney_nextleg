@@ -4,6 +4,8 @@ import { tnl } from '@/services/core/nextLeg';
 import Loading from '@/components/Loading';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from "@/hooks/useActions";
+import { addDoc, setDoc, collection, doc } from 'firebase/firestore';
+import { db } from '@/firebase';
 import {
     Button,
     Input,
@@ -24,7 +26,7 @@ import { useToast } from '@chakra-ui/react';
 import QueueOrder from './QueueOrder';
 
 function InputPrompt() {
-    const { thlInfo: { isLoadingPrompt, newRequest }, buttonsSettingInfo: { variant, style, checkedSettings } } = useTypedSelector(state => state);
+    const { thlInfo: { isLoadingPrompt, newRequest }, buttonsSettingInfo: { variant, style, checkedSettings, c3, c4, c5, c6, c7 } } = useTypedSelector(state => state);
     const { setLoadingPrompt, setCheckedSetting, setNewRequest } = useActions();
     const toast = useToast();
     const [text, setText] = useState<string>('');
@@ -36,23 +38,24 @@ function InputPrompt() {
         setText(value);
     };
     const sendImage = async () => {
+
         const textInput: string = `${text} ${variant.code} ${style.code}`
-        if (text.length > 0) {
-            setLoadingPrompt(true);
-            try {
-                const response = !openLinkInput ? await tnl.imagine(textInput) : await tnl.img2img(textInput, textLink);
-                setNewRequest({ prompt: textInput, messageId: response.messageId })
-            } catch (e: any) {
-                setLoadingPrompt(false);
-                toast({
-                    position: 'top',
-                    description: e.message,
-                    status: 'error',
-                    duration: 3000,
-                    isClosable: true,
-                });
-            }
-        }
+        // if (text.length > 0) {
+        //     setLoadingPrompt(true);
+        //     try {
+        //         const response = !openLinkInput ? await tnl.imagine(textInput) : await tnl.img2img(textInput, textLink);
+        //         setNewRequest({ prompt: textInput, messageId: response.messageId })
+        //     } catch (e: any) {
+        //         setLoadingPrompt(false);
+        //         toast({
+        //             position: 'top',
+        //             description: e.message,
+        //             status: 'error',
+        //             duration: 3000,
+        //             isClosable: true,
+        //         });
+        //     }
+        // }
 
     }
     return (
@@ -85,12 +88,27 @@ function InputPrompt() {
                     }}
                 >
                     <FormControl isRequired className='flex flex-wrap items-center gap-2 sm:flex-nowrap'>
-                        <InputGroup>
+                        <InputGroup overflowY='auto'>
                             {variant.code && checkedSettings &&
-                                <InputLeftAddon paddingX={2} children={variant.code} />
+                                <InputLeftAddon paddingX={1} children={variant.code} />
                             }
                             {style.code && checkedSettings &&
-                                <InputLeftAddon borderRadius={0} paddingX={2} children={style.code} />
+                                <InputLeftAddon borderRadius={0} paddingX={1} children={style.code} />
+                            }
+                            {c3.code && checkedSettings &&
+                                <InputLeftAddon borderRadius={0} paddingX={1} children={c3.code} />
+                            }
+                            {c4.code && checkedSettings &&
+                                <InputLeftAddon borderRadius={0} paddingX={1} children={c4.code} />
+                            }
+                            {c5.code && checkedSettings &&
+                                <InputLeftAddon borderRadius={0} paddingX={1} children={c5.code} />
+                            }
+                            {c6.code && checkedSettings &&
+                                <InputLeftAddon borderRadius={0} paddingX={1} children={c6.code} />
+                            }
+                            {c7.code && checkedSettings &&
+                                <InputLeftAddon borderRadius={0} paddingX={1} children={c7.code} />
                             }
                             <Input
                                 size='md'

@@ -1,0 +1,188 @@
+ await setDoc(doc(db, "buttons", "all"), {
+            "buttons": {
+                "style": [
+                    {
+                        "code": "--s 50",
+                        "selected": false,
+                        "name": "Style Low"
+                    },
+                    {
+                        "code": "",
+                        "selected": false,
+                        "name": "Style med"
+                    },
+                    {
+                        "selected": false,
+                        "name": "Style high",
+                        "code": "--s 250"
+                    },
+                    {
+                        "selected": false,
+                        "name": "Style very high",
+                        "code": "--s 750"
+                    },
+                ],
+                "version": [
+                    {
+                        "name": "MJ version 1",
+                        "code": "--v 1",
+                        "selected": false
+                    },
+                    {
+                        "selected": true,
+                        "code": "--v 2",
+                        "name": "MJ version 2"
+                    },
+                    {
+                        "code": "--v 3",
+                        "name": "MJ version 3",
+                        "selected": false
+                    },
+                    {
+                        "code": "--v 4",
+                        "name": "MJ version 4",
+                        "selected": false
+                    },
+                    {
+                        "selected": false,
+                        "name": "MJ version 5",
+                        "code": "--v 5"
+                    }
+                ],
+                "c3": [
+                    {
+                        "name": "MJ version 1",
+                        "code": "--v 1",
+                        "selected": false
+                    },
+                    {
+                        "selected": true,
+                        "code": "--v 2",
+                        "name": "MJ version 2"
+                    },
+                    {
+                        "code": "--v 3",
+                        "name": "MJ version 3",
+                        "selected": false
+                    },
+                    {
+                        "code": "--v 4",
+                        "name": "MJ version 4",
+                        "selected": false
+                    },
+                    {
+                        "selected": false,
+                        "name": "MJ version 5",
+                        "code": "--v 5"
+                    }
+                ],
+                "c4": [
+                    {
+                        "name": "MJ version 1",
+                        "code": "--v 1",
+                        "selected": false
+                    },
+                    {
+                        "selected": true,
+                        "code": "--v 2",
+                        "name": "MJ version 2"
+                    },
+                    {
+                        "code": "--v 3",
+                        "name": "MJ version 3",
+                        "selected": false
+                    },
+                    {
+                        "code": "--v 4",
+                        "name": "MJ version 4",
+                        "selected": false
+                    },
+                    {
+                        "selected": false,
+                        "name": "MJ version 5",
+                        "code": "--v 5"
+                    }
+                ],
+                "c5": [
+                    {
+                        "name": "MJ version 1",
+                        "code": "--v 1",
+                        "selected": false
+                    },
+                    {
+                        "selected": true,
+                        "code": "--v 2",
+                        "name": "MJ version 2"
+                    },
+                    {
+                        "code": "--v 3",
+                        "name": "MJ version 3",
+                        "selected": false
+                    },
+                    {
+                        "code": "--v 4",
+                        "name": "MJ version 4",
+                        "selected": false
+                    },
+                    {
+                        "selected": false,
+                        "name": "MJ version 5",
+                        "code": "--v 5"
+                    }
+                ],
+                "c6": [
+                    {
+                        "name": "MJ version 1",
+                        "code": "--v 1",
+                        "selected": false
+                    },
+                    {
+                        "selected": true,
+                        "code": "--v 2",
+                        "name": "MJ version 2"
+                    },
+                    {
+                        "code": "--v 3",
+                        "name": "MJ version 3",
+                        "selected": false
+                    },
+                    {
+                        "code": "--v 4",
+                        "name": "MJ version 4",
+                        "selected": false
+                    },
+                    {
+                        "selected": false,
+                        "name": "MJ version 5",
+                        "code": "--v 5"
+                    }
+                ],
+                "c7": [
+                    {
+                        "name": "MJ version 1",
+                        "code": "--v 1",
+                        "selected": false
+                    },
+                    {
+                        "selected": true,
+                        "code": "--v 2",
+                        "name": "MJ version 2"
+                    },
+                    {
+                        "code": "--v 3",
+                        "name": "MJ version 3",
+                        "selected": false
+                    },
+                    {
+                        "code": "--v 4",
+                        "name": "MJ version 4",
+                        "selected": false
+                    },
+                    {
+                        "selected": false,
+                        "name": "MJ version 5",
+                        "code": "--v 5"
+                    }
+                ],
+            }
+        });

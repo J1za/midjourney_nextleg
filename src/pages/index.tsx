@@ -52,6 +52,7 @@ export default function Home() {
                           btnText == 'Web' ? <Link href={imgUrl} isExternal><Button key={idx} size='sm' colorScheme='blue'>{btnText}</Button></Link>
                             :
                             <MyButton
+                              content={content}
                               key={idx}
                               btnText={btnText as TNLTypes.ButtonTypes}
                               buttonMessageId={buttonMessageId!}

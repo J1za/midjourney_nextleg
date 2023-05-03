@@ -9,6 +9,7 @@ import { useToast, Button } from '@chakra-ui/react';
 type Props = {
     buttonMessageId: string;
     btnText: TNLTypes.ButtonTypes;
+    content: string;
 };
 
 const endpoint = `https://api.thenextleg.io`;
@@ -17,10 +18,10 @@ const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${AUTH_TOKEN}`,
 };
-export default function MyButton({ btnText, buttonMessageId }: Props) {
+export default function MyButton({ btnText, buttonMessageId, content }: Props) {
     const toast = useToast();
     const { thlInfo: { isLoadingButtonPrompt } } = useTypedSelector(state => state);
-    const { setLoadingButtonPrompt, setLoadingPrompt } = useActions();
+    const { setLoadingButtonPrompt, setLoadingPrompt, setNewRequest } = useActions();
     const [response, setResponse] = useState<any>(null);
     const [error, setError] = useState(null);
     const [btnIdLoading, setBtnIdLoading] = useState<string>();
@@ -40,6 +41,7 @@ export default function MyButton({ btnText, buttonMessageId }: Props) {
                 { headers },
             );
             setResponse(JSON.stringify(r.data, null, 2));
+            setNewRequest({ prompt: content, messageId: r.data.messageId })
         } catch (e: any) {
             setError(e.message);
             setLoadingButtonPrompt(false);
