@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import ReactGA from 'react-ga';
+import ReactGA from "react-ga4";
 import '@/assets/styles/globals.css'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { store } from '@/store';
@@ -20,7 +20,6 @@ function MyApp({ Component, pageProps }: any) {
   useEffect(() => {
     if (process.env.NODE_ENV !== 'development') {
       ReactGA.initialize('G-2PE03SZNL5');
-      ReactGA.pageview(window.location.pathname + window.location.search);
     }
   }, []);
   return (
