@@ -20,10 +20,12 @@
 //   "responseAt": "2023-04-04T13:06:01.927Z"
 // }
 import { db } from '@/firebase';
-import { addDoc, setDoc, collection, doc } from 'firebase/firestore';
+import { addDoc, deleteDoc, setDoc, collection, doc } from 'firebase/firestore';
 
 export default async function handler(req: any, res: any) {
-  const { imageUrl, buttonMessageId, buttons, content, ref } = req.body as any;
+  const { imageUrl, buttonMessageId, buttons, content, ref, originatingMessageId } = req.body as any;
+  await deleteDoc(doc(db, 'queue', originatingMessageId))
+
   imageUrl ? await addDoc(collection(db, 'imgs'), {
     imgUrl: imageUrl,
     createdAt: new Date(), // serverTimestamp() -> Not all clients will have the same time

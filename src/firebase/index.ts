@@ -23,7 +23,7 @@ import {
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyDYR4-IHxxE3mbhnRsa0SYqfXSGB1Az4qc",
   authDomain: "midjourney-fa5b3.firebaseapp.com",
   projectId: "midjourney-fa5b3",

@@ -22,11 +22,14 @@ import ButtonsSetting from '@/components/ButtonsSetting';
 import { useToast } from '@chakra-ui/react';
 import QueueOrder from './QueueOrder';
 import { useGetUser } from '@/hooks/useGetUser';
+import db from '@/services/core/db.service';
+import { useGetQueueFirebase } from '@/hooks/useGetQueueFirebase';
 
 function InputPrompt() {
     const { uid } = useGetUser();
     const { thlInfo: { isLoadingPrompt, newRequest }, buttonsSettingInfo: { variant, style, checkedSettings, c3, c4, c5, c6, c7 } } = useTypedSelector(state => state);
     const { setLoadingPrompt, setCheckedSetting, setNewRequest } = useActions();
+    const { queue } = useGetQueueFirebase();
     const toast = useToast();
     const [text, setText] = useState<string>('');
     const [textLink, setTextLink] = useState<string>('');
@@ -42,6 +45,10 @@ function InputPrompt() {
             setLoadingPrompt(true);
             try {
                 const response = !openLinkInput ? await tnl.imagine(textInput, uid ?? '') : await tnl.img2img(textInput, textLink, uid ?? '');
+                db.setDocument('queue', response.messageId, {
+                    prompt: textInput,
+                    id: response.messageId
+                })
                 setNewRequest({ prompt: textInput, messageId: response.messageId })
             } catch (e: any) {
                 setLoadingPrompt(false);
@@ -71,9 +78,9 @@ function InputPrompt() {
                 <div className='flex flex-wrap py-2'>
                     <b>Queue:</b>
                     <div className='inline-flex flex-wrap ml-2'>
-                        {newRequest.map((item, index) => (
-                            <div key={item.messageId}>
-                                <QueueOrder messageId={item.messageId} prompt={item.prompt} />
+                        {queue?.map(({ id, prompt }, index) => (
+                            <div key={id}>
+                                <QueueOrder messageId={id} prompt={prompt} />
                                 {index !== newRequest.length - 1 && " , "}
                             </div>
                         ))}
