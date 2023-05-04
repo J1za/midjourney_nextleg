@@ -11,8 +11,6 @@ function QueueOrder({ messageId, prompt }: IQueueOrder) {
     const { data } = useGetListQueueQuery({ messageId: messageId }, {
         pollingInterval: messageId && progress !== 100 ? 1000 : 0
     });
-    console.log(messageId)
-    console.log(data)
     useEffect(() => {
         if (data) {
             setProgress(data.progress);

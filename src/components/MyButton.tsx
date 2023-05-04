@@ -7,6 +7,7 @@ import { useActions } from "@/hooks/useActions";
 import Loading from '@/components/Loading';
 import { useToast, Button } from '@chakra-ui/react';
 import { useGetUser } from '@/hooks/useGetUser';
+import db from '@/services/core/db.service';
 
 type Props = {
     buttonMessageId: string;
@@ -45,6 +46,10 @@ function MyButton({ btnText, buttonMessageId, content }: Props) {
                 { headers },
             );
             setResponse(JSON.stringify(r.data, null, 2));
+            db.setDocument('queue', r.data.messageId, {
+                prompt: content,
+                id: r.data.messageId
+            })
             setNewRequest({ prompt: content, messageId: r.data.messageId })
         } catch (e: any) {
             setError(e.message);
