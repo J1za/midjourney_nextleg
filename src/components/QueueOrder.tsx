@@ -16,7 +16,6 @@ function QueueOrder({ messageId, prompt }: IQueueOrder) {
 
     useEffect(() => {
         if (data) {
-            console.log(data)
             setProgress(data.progress);
             // const oldStorage: Array<any> = JSON.parse(localStorage.getItem('queue')!);
             // const queueData = { progress: progress, prompt: newRequest.prompt, messageId: newRequest.messageId };

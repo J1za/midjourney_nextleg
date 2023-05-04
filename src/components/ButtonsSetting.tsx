@@ -4,7 +4,9 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import {
     HStack,
     useRadioGroup,
-    Skeleton
+    Skeleton,
+    Text,
+    Box
 } from "@chakra-ui/react";
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from "@/hooks/useActions";
@@ -77,91 +79,112 @@ function ButtonsSetting() {
 
     return (
         <div className={`flex flex-wrap gap-5 overflow-hidden transition-all ${!checkedSettings ? 'max-h-0' : 'max-h-[2000px]'}`}>
-            <HStack  {...group1} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
-                {!loading &&
-                    dataButtons.buttons.version.map((el) => {
-                        const radio = getRadioProps({ value: el.name });
-                        return (
-                            <CustomRadio onClick={() => handleChangeVariant(el.name, el.code)} key={el.code} {...radio}>
-                                {el.name}
-                            </CustomRadio>
-                        );
-                    })
-                }
-            </HStack>
-            <HStack {...group2} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
-                {!loading &&
-                    dataButtons.buttons.style.map((el) => {
-                        const radio = getRadioPropsStyle({ value: el.name });
-                        return (
-                            <CustomRadio onClick={() => handleChangeStyle(el.name, el.code)} key={el.code} {...radio}>
-                                {el.name}
-                            </CustomRadio>
-                        );
-                    })
-                }
-            </HStack>
-            <HStack {...group3} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
-                {!loading &&
-                    dataButtons.buttons.c3.map((el) => {
-                        const radio = getRadioPropsC3({ value: el.name });
-                        return (
-                            <CustomRadio onClick={() => handleChangeC3(el.name, el.code)} key={el.code} {...radio}>
-                                {el.name}
-                            </CustomRadio>
-                        );
-                    })
-                }
-            </HStack>
-            <HStack {...group4} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
-                {!loading &&
-                    dataButtons.buttons.c4.map((el) => {
-                        const radio = getRadioPropsC4({ value: el.name });
-                        return (
-                            <CustomRadio onClick={() => handleChangeC4(el.name, el.code)} key={el.code} {...radio}>
-                                {el.name}
-                            </CustomRadio>
-                        );
-                    })
-                }
-            </HStack>
-            <HStack {...group5} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
-                {!loading &&
-                    dataButtons.buttons.c5.map((el) => {
-                        const radio = getRadioPropsC5({ value: el.name });
-                        return (
-                            <CustomRadio onClick={() => handleChangeC5(el.name, el.code)} key={el.code} {...radio}>
-                                {el.name}
-                            </CustomRadio>
-                        );
-                    })
-                }
-            </HStack>
-            <HStack {...group6} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
-                {!loading &&
-                    dataButtons.buttons.c6.map((el) => {
-                        const radio = getRadioPropsC6({ value: el.name });
-                        return (
-                            <CustomRadio onClick={() => handleChangeC6(el.name, el.code)} key={el.code} {...radio}>
-                                {el.name}
-                            </CustomRadio>
-                        );
-                    })
-                }
-            </HStack>
-            <HStack {...group7} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
-                {!loading &&
-                    dataButtons.buttons.c7.map((el) => {
-                        const radio = getRadioPropsC7({ value: el.name });
-                        return (
-                            <CustomRadio onClick={() => handleChangeC7(el.name, el.code)} key={el.code} {...radio}>
-                                {el.name}
-                            </CustomRadio>
-                        );
-                    })
-                }
-            </HStack>
-            <Skeleton borderRadius={6} className='w-full sm:w-60 h-44 sm:ml-auto' />
+            <Box>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
+                <HStack  {...group1} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
+                    {!loading &&
+                        dataButtons.buttons.version.map((el) => {
+                            const radio = getRadioProps({ value: el.name });
+                            return (
+                                <CustomRadio onClick={() => handleChangeVariant(el.name, el.code)} key={el.code} {...radio}>
+                                    {el.name}
+                                </CustomRadio>
+                            );
+                        })
+                    }
+                </HStack>
+            </Box>
+            <Box>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
+                <HStack {...group2} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
+                    {!loading &&
+                        dataButtons.buttons.style.map((el) => {
+                            const radio = getRadioPropsStyle({ value: el.name });
+                            return (
+                                <CustomRadio onClick={() => handleChangeStyle(el.name, el.code)} key={el.code} {...radio}>
+                                    {el.name}
+                                </CustomRadio>
+                            );
+                        })
+                    }
+                </HStack>
+            </Box>
+            <Box>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
+                <HStack {...group3} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
+                    {!loading &&
+                        dataButtons.buttons.c3.map((el) => {
+                            const radio = getRadioPropsC3({ value: el.name });
+                            return (
+                                <CustomRadio onClick={() => handleChangeC3(el.name, el.code)} key={el.code} {...radio}>
+                                    {el.name}
+                                </CustomRadio>
+                            );
+                        })
+                    }
+                </HStack>
+            </Box>
+            <Box>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
+                <HStack {...group4} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
+                    {!loading &&
+                        dataButtons.buttons.c4.map((el) => {
+                            const radio = getRadioPropsC4({ value: el.name });
+                            return (
+                                <CustomRadio onClick={() => handleChangeC4(el.name, el.code)} key={el.code} {...radio}>
+                                    {el.name}
+                                </CustomRadio>
+                            );
+                        })
+                    }
+                </HStack>
+            </Box>
+            <Box>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
+                <HStack {...group5} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
+                    {!loading &&
+                        dataButtons.buttons.c5.map((el) => {
+                            const radio = getRadioPropsC5({ value: el.name });
+                            return (
+                                <CustomRadio onClick={() => handleChangeC5(el.name, el.code)} key={el.code} {...radio}>
+                                    {el.name}
+                                </CustomRadio>
+                            );
+                        })
+                    }
+                </HStack>
+            </Box>
+            <Box>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
+                <HStack {...group6} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
+                    {!loading &&
+                        dataButtons.buttons.c6.map((el) => {
+                            const radio = getRadioPropsC6({ value: el.name });
+                            return (
+                                <CustomRadio onClick={() => handleChangeC6(el.name, el.code)} key={el.code} {...radio}>
+                                    {el.name}
+                                </CustomRadio>
+                            );
+                        })
+                    }
+                </HStack>
+            </Box>
+            <Box>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
+                <HStack {...group7} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
+                    {!loading &&
+                        dataButtons.buttons.c7.map((el) => {
+                            const radio = getRadioPropsC7({ value: el.name });
+                            return (
+                                <CustomRadio onClick={() => handleChangeC7(el.name, el.code)} key={el.code} {...radio}>
+                                    {el.name}
+                                </CustomRadio>
+                            );
+                        })
+                    }
+                </HStack>
+            </Box>
+            <Skeleton borderRadius={6} className='w-full h-auto sm:w-60 sm:ml-auto' />
         </div>
     )
 }
