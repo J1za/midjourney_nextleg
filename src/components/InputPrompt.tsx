@@ -20,10 +20,11 @@ import { MdImageNotSupported } from "react-icons/md";
 import useWindowDimensions from '@/hooks/useWindowDimensions';
 import ButtonsSetting from '@/components/ButtonsSetting';
 import { useToast } from '@chakra-ui/react';
-
 import QueueOrder from './QueueOrder';
+import { useGetUser } from '@/hooks/useGetUser';
 
 function InputPrompt() {
+    const { uid } = useGetUser();
     const { thlInfo: { isLoadingPrompt, newRequest }, buttonsSettingInfo: { variant, style, checkedSettings, c3, c4, c5, c6, c7 } } = useTypedSelector(state => state);
     const { setLoadingPrompt, setCheckedSetting, setNewRequest } = useActions();
     const toast = useToast();
@@ -40,7 +41,7 @@ function InputPrompt() {
         if (text.length > 0) {
             setLoadingPrompt(true);
             try {
-                const response = !openLinkInput ? await tnl.imagine(textInput) : await tnl.img2img(textInput, textLink);
+                const response = !openLinkInput ? await tnl.imagine(textInput, uid ?? '') : await tnl.img2img(textInput, textLink, uid ?? '');
                 setNewRequest({ prompt: textInput, messageId: response.messageId })
             } catch (e: any) {
                 setLoadingPrompt(false);

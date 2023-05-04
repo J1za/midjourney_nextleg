@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import {
-  auth,
   logInWithEmailAndPassword,
   signInWithGoogle,
 } from '../../firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import {
   Button,
   Flex,
@@ -16,18 +14,19 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { BsGoogle } from "react-icons/bs";
+import { useGetUser } from '@/hooks/useGetUser';
 
 function Login() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, loading] = useAuthState(auth);
+  const { loading, uid } = useGetUser()
   useEffect(() => {
     if (loading) {
       return;
     }
-    if (user) router.push('/');
-  }, [user, loading, router]);
+    if (uid) router.push('/');
+  }, [uid, loading, router]);
   return (
     <Flex direction="column" m="2" width='100%'>
       <form

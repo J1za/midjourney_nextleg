@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
-import { useAuthState } from 'react-firebase-hooks/auth';
 import {
-  auth,
   logout,
 } from '@/firebase';
 import { useRouter } from 'next/router'
@@ -10,18 +8,19 @@ import { Container, Box, Button } from '@chakra-ui/react';
 import { FiLogIn } from "react-icons/fi";
 import { AiOutlineRollback } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
+import { useGetUser } from '@/hooks/useGetUser';
 
 function Header() {
-  const [user, loading] = useAuthState(auth);
+  const { loading, uid } = useGetUser();
   const { push, asPath } = useRouter();
   useEffect(() => {
-    if (!user) return;
-  }, [user, loading, push, asPath]);
+    if (!uid) return;
+  }, [uid, loading, push, asPath]);
   return (
     <Box>
       <Container maxW='1536px' padding={2}>
         <Box display='flex' justifyContent='flex-end'>
-          {!user && !loading && !(asPath === '/login' || asPath === '/signup') &&
+          {!uid && !loading && !(asPath === '/login' || asPath === '/signup') &&
             <Button colorScheme='messenger' size='md' rightIcon={<FiLogIn size={20} />} onClick={() => push('/login')}>
               Login
             </Button>
@@ -31,7 +30,7 @@ function Header() {
               Back to Home
             </Button>
           }
-          {user &&
+          {uid &&
             <Button colorScheme='messenger' size='md' rightIcon={<BiLogOut size={20} />} onClick={() => {
               logout();
             }} >

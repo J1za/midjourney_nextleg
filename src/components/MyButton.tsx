@@ -6,6 +6,8 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from "@/hooks/useActions";
 import Loading from '@/components/Loading';
 import { useToast, Button } from '@chakra-ui/react';
+import { useGetUser } from '@/hooks/useGetUser';
+
 type Props = {
     buttonMessageId: string;
     btnText: TNLTypes.ButtonTypes;
@@ -19,6 +21,7 @@ const headers = {
     Authorization: `Bearer ${AUTH_TOKEN}`,
 };
 function MyButton({ btnText, buttonMessageId, content }: Props) {
+    const { uid } = useGetUser();
     const toast = useToast();
     const { thlInfo: { isLoadingButtonPrompt } } = useTypedSelector(state => state);
     const { setLoadingButtonPrompt, setLoadingPrompt, setNewRequest } = useActions();
@@ -37,6 +40,7 @@ function MyButton({ btnText, buttonMessageId, content }: Props) {
                 {
                     button: btnText,
                     buttonMessageId: buttonMessageId,
+                    ref: uid ?? '',
                 },
                 { headers },
             );

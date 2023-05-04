@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/router'
 import {
-  auth,
   registerWithEmailAndPassword,
   signInWithGoogle,
 } from '../../firebase';
@@ -16,21 +14,22 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { BsGoogle } from "react-icons/bs";
-
+import { useGetUser } from '@/hooks/useGetUser';
 function Register() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [user, loading] = useAuthState(auth);
+  const { loading, uid } = useGetUser();
+
   const register = () => {
     if (!name) alert('Please enter name');
     registerWithEmailAndPassword(name, email, password);
   };
   useEffect(() => {
     if (loading) return;
-    if (user) router.push('/');
-  }, [user, loading, router]);
+    if (uid) router.push('/');
+  }, [uid, loading, router]);
   return (
     <Flex direction="column" m="2">
       <form
