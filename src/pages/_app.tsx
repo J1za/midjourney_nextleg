@@ -18,9 +18,7 @@ function MyApp({ Component, pageProps }: any) {
     }
   });
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'development') {
-      ReactGA.initialize('G-2PE03SZNL5');
-    }
+    ReactGA.initialize('G-2PE03SZNL5');
   }, []);
   return (
     <ChakraProvider theme={theme}>
