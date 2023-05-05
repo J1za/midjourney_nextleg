@@ -35,7 +35,6 @@ function InputPrompt() {
     const [textLink, setTextLink] = useState<string>('');
     const [openLinkInput, setOpenLinkInput] = useState<boolean>(false);
     const { isMobile }: any = useWindowDimensions();
-
     const handleOnChangeText = (value: string) => {
         setText(value);
     };
@@ -112,8 +111,10 @@ function InputPrompt() {
                             {c6.code && checkedSettings &&
                                 <InputLeftAddon borderRadius={0} paddingX={1} children={c6.code} />
                             }
-                            {c7.code && checkedSettings &&
-                                <InputLeftAddon borderRadius={0} paddingX={1} children={c7.code} />
+                            {c7.length > 0 && checkedSettings &&
+                                c7.map(el => (
+                                    <InputLeftAddon key={el.code} borderRadius={0} paddingX={1} children={el.code} />
+                                ))
                             }
                             <Input
                                 size='md'

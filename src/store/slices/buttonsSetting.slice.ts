@@ -46,10 +46,7 @@ const initialState = {
         name: '',
         code: '',
     } as IButtonsInfo,
-    c7: {
-        name: '',
-        code: '',
-    } as IButtonsInfo,
+    c7: [] as IButtonsInfo[],
     checkedSettings: true,
 };
 
@@ -76,7 +73,14 @@ export const buttonsSetting = createSlice({
             state.c6 = action.payload;
         },
         changeC7: (state, action: PayloadAction<IButtonsInfo>) => {
-            state.c7 = action.payload;
+            const itemIndex = state.c7.findIndex(item => item.name === action.payload.name);
+            if (itemIndex === -1) {
+                // Add the item to the array if it doesn't already exist
+                state.c7.push(action.payload);
+            } else {
+                // Remove the item from the array if it already exists
+                state.c7.splice(itemIndex, 1);
+            }
         },
         setCheckedSetting: (state, action: PayloadAction<boolean>) => {
             state.checkedSettings = action.payload;
