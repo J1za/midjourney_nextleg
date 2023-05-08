@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { AUTH_TOKEN } from '@/services/core/nextLeg';
-import axios from 'axios';
 import { TNLTypes } from 'tnl-midjourney-api';
+import { tnl } from '@/services/core/nextLeg';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from "@/hooks/useActions";
 import Loading from '@/components/Loading';
@@ -15,19 +14,11 @@ type Props = {
     content: string;
 };
 
-const endpoint = `https://api.thenextleg.io`;
-
-const headers = {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${AUTH_TOKEN}`,
-};
 function MyButton({ btnText, buttonMessageId, content }: Props) {
     const { uid } = useGetUser();
     const toast = useToast();
     const { thlInfo: { isLoadingButtonPrompt } } = useTypedSelector(state => state);
     const { setLoadingButtonPrompt, setLoadingPrompt, setNewRequest } = useActions();
-    const [response, setResponse] = useState<any>(null);
-    const [error, setError] = useState(null);
     const [btnIdLoading, setBtnIdLoading] = useState<string>();
     const [btnTextLoading, setBtnTextLoading] = useState<string>();
 
@@ -36,23 +27,13 @@ function MyButton({ btnText, buttonMessageId, content }: Props) {
         setBtnTextLoading(btnText);
         setLoadingButtonPrompt(true);
         try {
-            const r = await axios.post(
-                `${endpoint}`,
-                {
-                    button: btnText,
-                    buttonMessageId: buttonMessageId,
-                    ref: uid ?? '',
-                },
-                { headers },
-            );
-            setResponse(JSON.stringify(r.data, null, 2));
-            db.setDocument('queue', r.data.messageId, {
+            const response = await tnl.button(btnText, buttonMessageId, uid)
+            db.setDocument('queue', response.messageId, {
                 prompt: content,
-                id: r.data.messageId
+                id: response.messageId
             })
-            setNewRequest({ prompt: content, messageId: r.data.messageId })
+            setNewRequest({ prompt: content, messageId: response.messageId })
         } catch (e: any) {
-            setError(e.message);
             setLoadingButtonPrompt(false);
             setLoadingPrompt(false);
             toast({
