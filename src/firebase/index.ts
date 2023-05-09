@@ -18,6 +18,8 @@ import {
   collection,
   where,
   addDoc,
+  setDoc,
+  doc
 } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -46,7 +48,7 @@ const signInWithGoogle = async () => {
     const q = query(collection(db, 'users'), where('uid', '==', user.uid));
     const docs = await getDocs(q);
     if (docs.docs.length === 0) {
-      await addDoc(collection(db, 'users'), {
+      await setDoc(doc(db, 'users', user.uid), {
         uid: user.uid,
         name: user.displayName,
         authProvider: 'google',
@@ -72,11 +74,12 @@ const registerWithEmailAndPassword = async (name: string, email: string, passwor
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-    await addDoc(collection(db, 'users'), {
+    await setDoc(doc(db, 'users', user.uid), {
       uid: user.uid,
       name,
       authProvider: 'local',
       email,
+      isPremium: false,
     });
   } catch (err: any) {
     console.error(err);

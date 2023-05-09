@@ -10,10 +10,11 @@ import { FiLogIn } from "react-icons/fi";
 import { AiOutlineRollback, AiOutlineHome } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
 import { BsImages } from "react-icons/bs";
+import { MdWorkspacePremium } from "react-icons/md";
 import { useGetUser } from '@/hooks/useGetUser';
-
+import { CheckoutSub } from '@/services/checkout';
 function Header() {
-  const { loading, uid } = useGetUser();
+  const { loading, uid, isPremium } = useGetUser();
   const { push, asPath } = useRouter();
   useEffect(() => {
     if (!uid) return;
@@ -35,6 +36,20 @@ function Header() {
                 My images
               </Button>
             </Link>
+          }
+          {uid &&
+            <Button onClick={(() => {
+              CheckoutSub({
+                lineItems: [
+                  {
+                    price: "price_1N5nYWHXbGbri7POduf819q9",
+                    quantity: 1
+                  }
+                ]
+              })
+            })} leftIcon={<MdWorkspacePremium size={20} />} colorScheme='orange' size='md'>
+              {isPremium ? 'Premium subscription' : 'Buy subscription 4$'}
+            </Button>
           }
           {!uid && !loading && !(asPath === '/login' || asPath === '/signup') &&
             <Button colorScheme='messenger' size='md' marginLeft='auto' rightIcon={<FiLogIn size={20} />} onClick={() => push('/login')}>
