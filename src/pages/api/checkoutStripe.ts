@@ -5,7 +5,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { type, id, data } = req.body as any;
     const userId = data?.client_reference_id as string;
-    alert('hey wake up')
     if (userId) {
         setDoc(doc(db, "users", userId), {
             isPremium: true
