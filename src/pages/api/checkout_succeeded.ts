@@ -1,6 +1,6 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 import { db } from '@/firebase';
-import { addDoc, updateDoc, deleteDoc, setDoc, collection, doc } from 'firebase/firestore';
+import { updateDoc, doc } from 'firebase/firestore';
 const endpointSecret = "whsec_c34629d41d0d94eaf989c04df601af55e2c906b2b4204ed6d4abcfbe85b21a80";
 export default async function handler(request: any, response: any) {
     const sig = request.headers['stripe-signature'];
