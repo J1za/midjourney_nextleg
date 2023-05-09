@@ -9,26 +9,6 @@ const stripe = new Stripe(`${process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY}`, {
 });
 const webhookSecret: any = process.env.NEXT_PUBLIC_SIGNING_SECRET_KEY;
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const buf = await buffer(req);
-    const sig: any = req.headers["stripe-signature"];
-
-    let event;
-
-    try {
-        event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
-    } catch (err: any) {
-        res.status(400).send(`Webhook Error: ${err.message}`);
-        return;
-    }
-    if (event.type === "charge.succeeded") {
-        const charge = event.data.object;
-        const docRef = doc(db, "users", 'EfWSGJmgS9NU5M2ki5IEJsEYwAe2');
-        updateDoc(docRef, {
-            isPremium: true
-        });
-        alert('yes true done good well done nice')
-    } else {
-        console.warn(`Unhandled event type: ${event.type}`);
-    }
-    res.json({ received: true });
+    res.status(200).json({ name: 'John Doe' });
+    
 }
