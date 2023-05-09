@@ -4,8 +4,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
-        const { type, id } = req.body as any;
-        const docRef = doc(db, "users", 'EfWSGJmgS9NU5M2ki5IEJsEYwAe2');
+        const { type, id, data } = req.body as any;
+        const userId = data.client_reference_id as string;
+        const docRef = doc(db, "users", userId);
         updateDoc(docRef, {
             isPremium: true
         });
