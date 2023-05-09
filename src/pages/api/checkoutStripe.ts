@@ -9,6 +9,6 @@ const stripe = new Stripe(`${process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY}`, {
 });
 const webhookSecret: any = process.env.NEXT_PUBLIC_SIGNING_SECRET_KEY;
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    res.status(200).json({ name: 'John Doe' });
-    
+    const { type, id } = req.body as any;
+    res.status(200).json({ type, id });
 }
