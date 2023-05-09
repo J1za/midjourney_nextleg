@@ -1,6 +1,6 @@
 import { loadStripe } from "@stripe/stripe-js";
 
-export async function CheckoutSub({ lineItems }: any) {
+export async function CheckoutSub({ lineItems, uid }: any) {
     let stripePromise: any = null
 
     const getStripe = () => {
@@ -16,7 +16,8 @@ export async function CheckoutSub({ lineItems }: any) {
         mode: 'subscription',
         lineItems,
         successUrl: `${window.location.origin}`,
-        cancelUrl: window.location.origin
+        cancelUrl: window.location.origin,
+        clientReferenceId: uid
     })
 
 }

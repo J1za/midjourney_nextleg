@@ -45,7 +45,8 @@ function Header() {
                     price: "price_1N5nYWHXbGbri7POduf819q9",
                     quantity: 1
                   }
-                ]
+                ],
+                uid
               })
             })} leftIcon={<MdWorkspacePremium size={20} />} colorScheme='orange' size='md'>
               {isPremium ? 'Premium subscription' : 'Buy subscription 4$'}
