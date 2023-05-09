@@ -38,7 +38,7 @@ function Header() {
             </Link>
           }
           {uid &&
-            <Button onClick={(() => {
+            <Button hidden onClick={(() => {
               CheckoutSub({
                 lineItems: [
                   {
