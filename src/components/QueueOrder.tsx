@@ -1,6 +1,7 @@
-import { useEffect, useState, memo } from 'react'
+import { useEffect, useState } from 'react'
 import { useGetListQueueQuery } from '@/store/api/queueImage.api';
-
+import { db } from '@/firebase';
+import { deleteDoc, doc } from 'firebase/firestore';
 interface IQueueOrder {
     messageId: string
     prompt: string
@@ -14,8 +15,12 @@ function QueueOrder({ messageId, prompt }: IQueueOrder) {
     useEffect(() => {
         if (data) {
             setProgress(data.progress);
+
         }
-    }, [data]);
+        if (data.progress === 'incomplete') {
+            deleteDoc(doc(db, 'queue', messageId))
+        }
+    }, [data, messageId]);
 
     if (!messageId) {
         return null;
