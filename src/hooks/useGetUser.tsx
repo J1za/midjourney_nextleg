@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import {
     auth
 } from '@/firebase';
@@ -10,12 +9,13 @@ export const useGetUser = () => {
     const [user, loading] = useAuthState(auth);
     const uid = user?.uid;
     const [value, error] = useDocument(
-        doc(db, 'users', user?.uid ?? '1234'),
+        doc(db, 'users', uid ?? '1'),
         {
             snapshotListenOptions: { includeMetadataChanges: false },
         }
     );
     const isPremium = value?.data()?.isPremium
+
     return {
         loading,
         uid,

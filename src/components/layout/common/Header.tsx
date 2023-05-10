@@ -38,19 +38,18 @@ function Header() {
             </Link>
           }
           {uid &&
-            <Button onClick={(() => {
-              console.log(uid),
-                CheckoutSub({
-                  lineItems: [
-                    {
-                      price: "price_1N5nYWHXbGbri7POduf819q9",
-                      quantity: 1
-                    }
-                  ],
-                  uid
-                })
+            <Button pointerEvents={isPremium ? 'none' : 'visible'} onClick={(() => {
+              CheckoutSub({
+                lineItems: [
+                  {
+                    price: "price_1N5nYWHXbGbri7POduf819q9",
+                    quantity: 1
+                  }
+                ],
+                uid
+              })
             })} leftIcon={<MdWorkspacePremium size={20} />} colorScheme='orange' size='md'>
-              {isPremium ? 'Premium subscription' : 'Buy subscription 4$'}
+              {!isPremium ? 'Buy subscription 4$' : 'Premium subscription'}
             </Button>
           }
           {!uid && !loading && !(asPath === '/login' || asPath === '/signup') &&
