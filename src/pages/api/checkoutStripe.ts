@@ -2,7 +2,7 @@ import { db } from '@/firebase';
 import { setDoc, doc } from 'firebase/firestore';
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handlerCheckout(req: NextApiRequest, res: NextApiResponse) {
     const { type, id, data } = req.body as any;
     const userId = data?.client_reference_id as string;
     try {
@@ -13,7 +13,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } catch (error) {
         // Handle or log the error
         res.status(400).json({ "Error updating Firestore document:": error });
-        console.error("Error updating Firestore document:", error);
     }
 
 }
