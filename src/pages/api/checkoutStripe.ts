@@ -6,7 +6,7 @@ export default async function handlerCheckout(req: NextApiRequest, res: NextApiR
     const { type, id, data } = req.body as any;
     const userId = data?.client_reference_id as string;
     try {
-        await setDoc(doc(db, "users", userId), {
+        await setDoc(doc(db, "users", 'nzhwLPJiVNRW9Z1HSAcud4Ox1Aa2'), {
             isPremium: true
         }, { merge: true });
         res.status(200).json({ type, id });
