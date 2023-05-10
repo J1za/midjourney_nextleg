@@ -15,7 +15,6 @@ function QueueOrder({ messageId, prompt }: IQueueOrder) {
     useEffect(() => {
         if (data) {
             setProgress(data.progress);
-
         }
         if (data.progress === 'incomplete') {
             deleteDoc(doc(db, 'queue', messageId))
