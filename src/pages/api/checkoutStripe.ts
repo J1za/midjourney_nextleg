@@ -10,6 +10,7 @@ export default async function handlerCheckout(req: NextApiRequest, res: NextApiR
             await setDoc(doc(db, "users", userId), {
                 isPremium: true
             }, { merge: true });
+            res.status(200).json({ status: 'done' });
         } catch (error) {
             // Handle or log the error
             res.status(400).json({ "Error updating Firestore document:": error });
