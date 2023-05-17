@@ -27,7 +27,7 @@ async function checkSignature(req: NextApiRequest, res: NextApiResponse) {
     let stripeEvent;
 
     try {
-        stripeEvent = stripe.webhooks.constructEvent(buf.toString(), sig, webhookSecret);
+        stripeEvent = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
         console.log('stripeEvent', stripeEvent);
     } catch (err: any) {
         res.status(400).send(`Webhook Error: ${err.message}`);
