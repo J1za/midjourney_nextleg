@@ -47,7 +47,7 @@ async function checkSignature(req: NextApiRequest, res: NextApiResponse) {
         }
     }
 
-    res.json({ received: true, stripeEvent });
+    res.json({ received: true });
 }
 export default async function handlerCheckout(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
