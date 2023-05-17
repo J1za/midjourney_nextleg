@@ -15,7 +15,7 @@ export const config = {
 };
 
 const updateOrder = async (userId: string) => {
-    await setDoc(doc(db, "users", userId), {
+    await setDoc(doc(db, "users", 'EjzwZsV9ypchjrl6iVM4TeErjBH2'), {
         isPremium: true
     }, { merge: true });
 }
