@@ -80,7 +80,7 @@ function ButtonsSetting() {
         <div className={`flex flex-wrap gap-5 overflow-hidden transition-all ${!checkedSettings ? 'max-h-0' : 'max-h-[2000px]'}`}>
 
             <Box>
-                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Version</Text>
                 <HStack  {...group1} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
                     {!loading &&
                         dataButtons.buttons.version.map((el) => {
@@ -95,7 +95,7 @@ function ButtonsSetting() {
                 </HStack>
             </Box>
             <Box>
-                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Style</Text>
                 <HStack {...group2} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
                     {!loading &&
                         dataButtons.buttons.style.map((el) => {
@@ -110,7 +110,7 @@ function ButtonsSetting() {
                 </HStack>
             </Box>
             <Box>
-                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Mode</Text>
                 <HStack {...group3} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
                     {!loading &&
                         dataButtons.buttons.c3.map((el) => {
@@ -125,8 +125,8 @@ function ButtonsSetting() {
                 </HStack>
             </Box>
             <Box>
-                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
-                <HStack {...group4} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Art style</Text>
+                <HStack {...group4} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
                     {!loading &&
                         dataButtons.buttons.c4.map((el) => {
                             const radio = getRadioPropsC4({ value: el.name });
@@ -140,8 +140,8 @@ function ButtonsSetting() {
                 </HStack>
             </Box>
             <Box>
-                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
-                <HStack {...group5} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Emote</Text>
+                <HStack {...group5} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
                     {!loading &&
                         dataButtons.buttons.c5.map((el) => {
                             const radio = getRadioPropsC5({ value: el.name });
@@ -155,8 +155,8 @@ function ButtonsSetting() {
                 </HStack>
             </Box>
             <Box>
-                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
-                <HStack {...group6} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Colors</Text>
+                <HStack {...group6} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
                     {!loading &&
                         dataButtons.buttons.c6.map((el) => {
                             const radio = getRadioPropsC6({ value: el.name });
@@ -170,8 +170,8 @@ function ButtonsSetting() {
                 </HStack>
             </Box>
             <Box>
-                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Title</Text>
-                <HStack className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
+                <Text fontSize='lg' fontWeight={500} marginBottom={1}>Location</Text>
+                <HStack className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0'>
                     {!loading &&
                         dataButtons.buttons.c7.map((el) => {
                             return (
