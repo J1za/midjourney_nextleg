@@ -28,7 +28,7 @@ export default async function handlerCheckout(req: NextApiRequest, res: NextApiR
         let stripeEvent;
 
         try {
-            stripeEvent = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
+            stripeEvent = stripe.webhooks.constructEvent(buf.toString(), sig, webhookSecret);
             console.log('stripeEvent', stripeEvent);
         } catch (err: any) {
             res.status(400).send(`Webhook Error: ${err.message}`);
