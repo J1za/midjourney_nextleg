@@ -35,10 +35,7 @@ async function checkSignature(req: NextApiRequest, res: NextApiResponse) {
     }
 
     if ('checkout.session.completed' === stripeEvent.type) {
-        const session = stripeEvent.data.object;
         const userId = stripeEvent.data.client_reference_id;
-        console.log('sessionsession', session);
-        console.log('✅ session.metadata.orderId', session.metadata.orderId, session.id);
         // Payment Success.
         try {
             await updateOrder(userId);
@@ -47,7 +44,7 @@ async function checkSignature(req: NextApiRequest, res: NextApiResponse) {
         }
     }
 
-    res.json({ received: true, stripeEvent });
+    res.json({ received: true, userId: stripeEvent.data.client_reference_id });
 }
 export default async function handlerCheckout(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
