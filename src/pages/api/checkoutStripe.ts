@@ -7,7 +7,7 @@ const Stripe = require('stripe');
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY, {
     apiVersion: '2022-11-15'
 });
-const webhookSecret = process.env.STRIPE_WEBHOOK_ENDPOINT_SECRET;
+const webhookSecret = process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_ENDPOINT_SECRET;
 export const config = {
     api: {
         bodyParser: false,
