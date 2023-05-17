@@ -27,7 +27,7 @@ async function checkSignature(req: NextApiRequest, res: NextApiResponse) {
     let stripeEvent;
 
     try {
-        stripeEvent = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
+        stripeEvent = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
         console.log('stripeEvent', stripeEvent);
     } catch (err: any) {
         res.status(400).send(`Webhook Error: ${err.message}`);
@@ -36,17 +36,18 @@ async function checkSignature(req: NextApiRequest, res: NextApiResponse) {
 
     if ('checkout.session.completed' === stripeEvent.type) {
         const session = stripeEvent.data.object;
+        const userId = stripeEvent.data.client_reference_id;
         console.log('sessionsession', session);
         console.log('✅ session.metadata.orderId', session.metadata.orderId, session.id);
         // Payment Success.
-        // try {
-        //     await updateOrder('processing', session.metadata.orderId, session.id);
-        // } catch (error) {
-        //     console.error('Update order error', error);
-        // }
+        try {
+            await updateOrder(userId);
+        } catch (error) {
+            console.error('Update order error', error);
+        }
     }
 
-    res.json({ received: true });
+    res.json({ received: true, stripeEvent });
 }
 export default async function handlerCheckout(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
