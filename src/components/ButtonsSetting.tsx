@@ -14,9 +14,10 @@ import { useActions } from "@/hooks/useActions";
 import CustomRadio from './CustomRadio';
 import CustomCheckbox from './CustomCheckbox';
 import { IButtonsSetting } from '@/store/slices/buttonsSetting.slice';
-
+import { useGetUser } from '@/hooks/useGetUser';
 
 function ButtonsSetting() {
+    const { isPremium } = useGetUser();
     const { buttonsSettingInfo: { variant, checkedSettings } } = useTypedSelector(state => state);
     const { changeVariant, changeStyle, changeC3, changeC4, changeC5, changeC6, changeC7 } = useActions();
     const [value, loading, error] = useDocument(
@@ -111,7 +112,7 @@ function ButtonsSetting() {
             </Box>
             <Box>
                 <Text fontSize='lg' fontWeight={500} marginBottom={1}>Mode</Text>
-                <HStack {...group3} className='!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 opacity-60 select-none pointer-events-none'>
+                <HStack {...group3} className={`!grid max-h-44 gap-1 auto-rows-min overflow-y-auto p-4 pl-0 pt-0 ${isPremium ? '' : 'opacity-60 select-none pointer-events-none'}`}>
                     {!loading &&
                         dataButtons.buttons.c3.map((el) => {
                             const radio = getRadioPropsC3({ value: el.name });
