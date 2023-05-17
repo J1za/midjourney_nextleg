@@ -44,7 +44,7 @@ async function checkSignature(req: NextApiRequest, res: NextApiResponse) {
         }
     }
 
-    res.json({ received: true, userId: stripeEvent.data.client_reference_id });
+    res.json({ received: true, userId: stripeEvent.data });
 }
 export default async function handlerCheckout(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
