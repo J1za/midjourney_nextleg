@@ -47,7 +47,7 @@ function MyButton({ btnText, buttonMessageId, content }: Props) {
     };
 
     return (
-        <div>
+        <>
             <Button
                 colorScheme='blue'
                 size='sm'
@@ -57,7 +57,7 @@ function MyButton({ btnText, buttonMessageId, content }: Props) {
                 {isLoadingButtonPrompt && btnIdLoading == buttonMessageId && btnTextLoading == btnText ? 'Loading...' : btnText}
             </Button>
             {isLoadingButtonPrompt && btnIdLoading == buttonMessageId && btnTextLoading == btnText && <Loading />}
-        </div>
+        </>
     );
 }
 export default MyButton;

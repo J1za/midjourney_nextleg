@@ -16,7 +16,7 @@ function QueueOrder({ messageId, prompt }: IQueueOrder) {
         if (data) {
             setProgress(data.progress);
         }
-        if (data.progress === 'incomplete') {
+        if (data && data?.progress === 'incomplete') {
             deleteDoc(doc(db, 'queue', messageId))
         }
     }, [data, messageId]);

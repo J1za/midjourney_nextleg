@@ -33,10 +33,10 @@ export default function Home() {
                 <Image
                   src={imgUrl}
                   className='w-full'
-                  key={imgUrl}
                   alt='nothing'
                   width={400}
                   height={400}
+                  priority={true}
                 />
 
                 {buttons && (
@@ -47,7 +47,7 @@ export default function Home() {
                           ?
                           <Button key={idx} colorScheme='blue'>{btnText}</Button>
                           :
-                          btnText == 'Web' ? <Link href={imgUrl} isExternal><Button key={idx} size='sm' colorScheme='blue'>{btnText}</Button></Link>
+                          btnText == 'Web' ? <Button key={idx} size='sm' colorScheme='blue'><Link href={imgUrl} isExternal>{btnText}</Link></Button>
                             :
                             <MyButton
                               content={content}
