@@ -27,7 +27,7 @@ async function checkSignature(req: NextApiRequest, res: NextApiResponse) {
     let stripeEvent;
 
     try {
-        stripeEvent = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+        stripeEvent = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
         console.log('stripeEvent', stripeEvent);
     } catch (err: any) {
         res.status(400).send(`Webhook Error: ${err.message}`);
@@ -47,7 +47,7 @@ async function checkSignature(req: NextApiRequest, res: NextApiResponse) {
         }
     }
 
-    res.json({ received: true });
+    res.json({ received: true, stripeEvent });
 }
 export default async function handlerCheckout(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
